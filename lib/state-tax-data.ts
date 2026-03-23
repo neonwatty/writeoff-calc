@@ -294,6 +294,64 @@ const STATE_BRACKETS: Record<string, StateBracket[]> = {
   ],
 };
 
+// ─── State Standard Deductions (2025, single filer, approximate) ─────────────
+// Sources: state DOR websites, Tax Foundation
+// States that tax from AGI directly or have no standard deduction concept use 0.
+// This is a simplification — real state deductions vary by filing status.
+
+const STATE_STANDARD_DEDUCTIONS: Record<string, number> = {
+  Alabama: 3_000,
+  Arizona: 0,          // AZ taxes from AGI
+  Arkansas: 2_340,
+  California: 5_540,
+  Colorado: 15_750,    // CO taxes from federal taxable income — use federal std deduction
+  Connecticut: 0,      // CT uses AGI
+  Delaware: 3_250,
+  'District of Columbia': 0, // DC uses AGI
+  Georgia: 5_400,
+  Hawaii: 2_200,
+  Idaho: 15_750,       // ID conforms to federal standard deduction
+  Illinois: 0,         // IL taxes from AGI (flat rate)
+  Indiana: 0,          // IN taxes from AGI (flat rate)
+  Iowa: 15_750,        // IA conforms to federal standard deduction
+  Kansas: 3_500,
+  Kentucky: 3_160,
+  Louisiana: 0,        // LA uses AGI
+  Maine: 14_600,
+  Maryland: 2_550,
+  Massachusetts: 0,    // MA taxes from AGI
+  Michigan: 0,         // MI taxes from AGI (flat rate)
+  Minnesota: 14_575,
+  Mississippi: 2_300,
+  Missouri: 14_600,
+  Montana: 5_540,
+  Nebraska: 7_900,
+  'New Jersey': 0,     // NJ taxes from AGI
+  'New Mexico': 0,     // NM taxes from AGI
+  'New York': 8_000,
+  'North Carolina': 0, // NC uses federal AGI
+  'North Dakota': 15_750, // ND uses federal taxable income — use federal std deduction
+  Ohio: 0,             // OH uses AGI
+  Oklahoma: 6_350,
+  Oregon: 2_745,
+  Pennsylvania: 0,     // PA taxes from AGI (flat rate)
+  'Rhode Island': 10_550,
+  'South Carolina': 14_600,
+  Utah: 0,             // UT taxes from AGI (flat rate with credit)
+  Vermont: 7_000,
+  Virginia: 8_000,
+  'West Virginia': 0,  // WV taxes from AGI
+  Wisconsin: 12_760,
+};
+
+/**
+ * Returns the approximate state standard deduction for a single filer.
+ * Returns 0 for no-tax states, states that use AGI directly, and unknown states.
+ */
+export function getStateStandardDeduction(state: string): number {
+  return STATE_STANDARD_DEDUCTIONS[state] ?? 0;
+}
+
 // ─── ALL_STATES ───────────────────────────────────────────────────────────────
 
 export const ALL_STATES: string[] = [
