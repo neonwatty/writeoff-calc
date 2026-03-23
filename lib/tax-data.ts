@@ -1,29 +1,29 @@
-export type FilingStatus = 'single' | 'mfj' | 'mfs' | 'hoh';
-export type TaxYear = 2025 | 2026;
+export type FilingStatus = 'single' | 'mfj' | 'mfs' | 'hoh'
+export type TaxYear = 2025 | 2026
 
-export interface Bracket {
-  rate: number;
-  floor: number;
+interface Bracket {
+  rate: number
+  floor: number
 }
 
-export interface TaxData {
-  brackets: Bracket[];
-  standardDeduction: number;
-  ssWageBase: number;
-  ssRate: number;
-  medicareRate: number;
-  addlMedicareRate: number;
-  seIncomeFactor: number;
-  addlMedicareThreshold: number;
-  qbiRate: number;
+interface TaxData {
+  brackets: Bracket[]
+  standardDeduction: number
+  ssWageBase: number
+  ssRate: number
+  medicareRate: number
+  addlMedicareRate: number
+  seIncomeFactor: number
+  addlMedicareThreshold: number
+  qbiRate: number
 }
 
 // Fixed SE tax rates (same for all years/statuses)
-const SS_RATE = 0.124;
-const MEDICARE_RATE = 0.029;
-const ADDL_MEDICARE_RATE = 0.009;
-const SE_INCOME_FACTOR = 0.9235;
-const QBI_RATE = 0.20;
+const SS_RATE = 0.124
+const MEDICARE_RATE = 0.029
+const ADDL_MEDICARE_RATE = 0.009
+const SE_INCOME_FACTOR = 0.9235
+const QBI_RATE = 0.2
 
 // Additional Medicare thresholds by filing status
 const ADDL_MEDICARE_THRESHOLDS: Record<FilingStatus, number> = {
@@ -31,13 +31,13 @@ const ADDL_MEDICARE_THRESHOLDS: Record<FilingStatus, number> = {
   mfj: 250000,
   mfs: 125000,
   hoh: 200000,
-};
+}
 
 // SS wage bases by year
 const SS_WAGE_BASES: Record<TaxYear, number> = {
   2025: 176100,
   2026: 184500,
-};
+}
 
 // Standard deductions by year and filing status
 const STANDARD_DEDUCTIONS: Record<TaxYear, Record<FilingStatus, number>> = {
@@ -53,13 +53,13 @@ const STANDARD_DEDUCTIONS: Record<TaxYear, Record<FilingStatus, number>> = {
     mfs: 16100,
     hoh: 24150,
   },
-};
+}
 
 // Federal income tax brackets by year and filing status
 const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
   2025: {
     single: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 11925 },
       { rate: 0.22, floor: 48475 },
       { rate: 0.24, floor: 103350 },
@@ -68,7 +68,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
       { rate: 0.37, floor: 626350 },
     ],
     mfj: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 23850 },
       { rate: 0.22, floor: 96950 },
       { rate: 0.24, floor: 206700 },
@@ -77,7 +77,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
       { rate: 0.37, floor: 751600 },
     ],
     mfs: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 11925 },
       { rate: 0.22, floor: 48475 },
       { rate: 0.24, floor: 103350 },
@@ -86,7 +86,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
       { rate: 0.37, floor: 375800 },
     ],
     hoh: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 17000 },
       { rate: 0.22, floor: 64850 },
       { rate: 0.24, floor: 103350 },
@@ -97,7 +97,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
   },
   2026: {
     single: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 12400 },
       { rate: 0.22, floor: 50400 },
       { rate: 0.24, floor: 105700 },
@@ -106,7 +106,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
       { rate: 0.37, floor: 640600 },
     ],
     mfj: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 24800 },
       { rate: 0.22, floor: 100800 },
       { rate: 0.24, floor: 211400 },
@@ -115,7 +115,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
       { rate: 0.37, floor: 768700 },
     ],
     mfs: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 12400 },
       { rate: 0.22, floor: 50400 },
       { rate: 0.24, floor: 105700 },
@@ -124,7 +124,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
       { rate: 0.37, floor: 384350 },
     ],
     hoh: [
-      { rate: 0.10, floor: 0 },
+      { rate: 0.1, floor: 0 },
       { rate: 0.12, floor: 17700 },
       { rate: 0.22, floor: 67450 },
       { rate: 0.24, floor: 105700 },
@@ -133,7 +133,7 @@ const BRACKETS: Record<TaxYear, Record<FilingStatus, Bracket[]>> = {
       { rate: 0.37, floor: 640600 },
     ],
   },
-};
+}
 
 export function getTaxData(year: TaxYear, filingStatus: FilingStatus): TaxData {
   return {
@@ -146,5 +146,5 @@ export function getTaxData(year: TaxYear, filingStatus: FilingStatus): TaxData {
     seIncomeFactor: SE_INCOME_FACTOR,
     addlMedicareThreshold: ADDL_MEDICARE_THRESHOLDS[filingStatus],
     qbiRate: QBI_RATE,
-  };
+  }
 }

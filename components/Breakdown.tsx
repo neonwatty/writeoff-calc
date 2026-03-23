@@ -1,37 +1,34 @@
-"use client";
+'use client'
 
-import { useState } from 'react';
-import { TaxProfile, SavingsBreakdown } from '@/lib/tax-engine';
-import { formatCurrency } from '@/lib/format';
-import { getTaxData } from '@/lib/tax-data';
-import { getStateTaxInfo, NO_INCOME_TAX_STATES } from '@/lib/state-tax-data';
+import { useState } from 'react'
+import { TaxProfile, SavingsBreakdown } from '@/lib/tax-engine'
+import { formatCurrency } from '@/lib/format'
+import { getTaxData } from '@/lib/tax-data'
+import { getStateTaxInfo, NO_INCOME_TAX_STATES } from '@/lib/state-tax-data'
 
 interface BreakdownProps {
-  breakdown: SavingsBreakdown;
-  expenseAmount: number;
-  profile: TaxProfile;
+  breakdown: SavingsBreakdown
+  expenseAmount: number
+  profile: TaxProfile
 }
 
 export default function Breakdown({ breakdown, expenseAmount, profile }: BreakdownProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  if (expenseAmount <= 0) return null;
+  if (expenseAmount <= 0) return null
 
-  const { baseline, withExpense } = breakdown;
-  const agiReduction = baseline.agi - withExpense.agi;
-  const taxableIncomeReduction = baseline.taxableIncome - withExpense.taxableIncome;
-  const addlMedicareSavings = baseline.addlMedicareTax - withExpense.addlMedicareTax;
-  const coreSESavings = breakdown.seSavings - addlMedicareSavings;
+  const { baseline, withExpense } = breakdown
+  const agiReduction = baseline.agi - withExpense.agi
+  const taxableIncomeReduction = baseline.taxableIncome - withExpense.taxableIncome
+  const addlMedicareSavings = baseline.addlMedicareTax - withExpense.addlMedicareTax
+  const coreSESavings = breakdown.seSavings - addlMedicareSavings
 
-  const taxData = getTaxData(profile.taxYear, profile.filingStatus);
-  const marginalRate = (baseline.marginalFederalRate * 100).toFixed(0);
+  const taxData = getTaxData(profile.taxYear, profile.filingStatus)
+  const marginalRate = (baseline.marginalFederalRate * 100).toFixed(0)
 
   return (
     <>
-      <button
-        className="breakdown-toggle"
-        onClick={() => setOpen(!open)}
-      >
+      <button className="breakdown-toggle" onClick={() => setOpen(!open)}>
         {open ? '\u25BE' : '\u25B8'} HOW IS THIS CALCULATED?
       </button>
       <div className={`breakdown ${open ? 'open' : ''}`}>
@@ -64,12 +61,12 @@ export default function Breakdown({ breakdown, expenseAmount, profile }: Breakdo
         </div>
         <div className="breakdown-note">
           {(() => {
-            if (NO_INCOME_TAX_STATES.includes(profile.state)) return 'No state income tax';
-            const brackets = getStateTaxInfo(profile.state);
-            if (!brackets) return `On ${formatCurrency(agiReduction)} AGI reduction`;
+            if (NO_INCOME_TAX_STATES.includes(profile.state)) return 'No state income tax'
+            const brackets = getStateTaxInfo(profile.state)
+            if (!brackets) return `On ${formatCurrency(agiReduction)} AGI reduction`
             return brackets.length <= 1
               ? `Flat ${(brackets[0].rate * 100).toFixed(1).replace(/\.0$/, '')}% rate on ${formatCurrency(agiReduction)} AGI reduction`
-              : `At your marginal rate on ${formatCurrency(agiReduction)} AGI reduction`;
+              : `At your marginal rate on ${formatCurrency(agiReduction)} AGI reduction`
           })()}
         </div>
 
@@ -93,9 +90,7 @@ export default function Breakdown({ breakdown, expenseAmount, profile }: Breakdo
           <span>QBI deduction offset</span>
           <span className="cost">+{formatCurrency(breakdown.qbiOffset)}</span>
         </div>
-        <div className="breakdown-note">
-          This expense reduces your QBI, shrinking your 20% deduction
-        </div>
+        <div className="breakdown-note">This expense reduces your QBI, shrinking your 20% deduction</div>
 
         <hr className="breakdown-divider" />
 
@@ -106,5 +101,5 @@ export default function Breakdown({ breakdown, expenseAmount, profile }: Breakdo
         </div>
       </div>
     </>
-  );
+  )
 }

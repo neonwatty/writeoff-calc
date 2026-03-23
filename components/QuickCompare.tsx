@@ -1,23 +1,23 @@
-"use client";
+'use client'
 
-import { useMemo } from 'react';
-import { TaxProfile, computeSavings } from '@/lib/tax-engine';
-import { formatCurrency, formatPercent } from '@/lib/format';
+import { useMemo } from 'react'
+import { TaxProfile, computeSavings } from '@/lib/tax-engine'
+import { formatCurrency, formatPercent } from '@/lib/format'
 
 interface QuickCompareProps {
-  profile: TaxProfile;
-  onSelectAmount: (amount: number) => void;
+  profile: TaxProfile
+  onSelectAmount: (amount: number) => void
 }
 
-const PRICE_POINTS = [500, 2500, 5000, 10000];
+const PRICE_POINTS = [500, 2500, 5000, 10000]
 
 export default function QuickCompare({ profile, onSelectAmount }: QuickCompareProps) {
   const results = useMemo(() => {
     return PRICE_POINTS.map((amount) => ({
       amount,
       savings: computeSavings(profile, amount),
-    }));
-  }, [profile]);
+    }))
+  }, [profile])
 
   return (
     <div className="quick-compare">
@@ -32,8 +32,8 @@ export default function QuickCompare({ profile, onSelectAmount }: QuickComparePr
             onClick={() => onSelectAmount(amount)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                onSelectAmount(amount);
+                e.preventDefault()
+                onSelectAmount(amount)
               }
             }}
           >
@@ -44,5 +44,5 @@ export default function QuickCompare({ profile, onSelectAmount }: QuickComparePr
         ))}
       </div>
     </div>
-  );
+  )
 }

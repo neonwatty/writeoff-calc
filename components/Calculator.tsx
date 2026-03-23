@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from 'react';
-import { TaxProfile, computeTaxLiability, computeSavings, SavingsBreakdown, TaxResult } from '@/lib/tax-engine';
-import TaxProfileComponent from '@/components/TaxProfile';
-import RatesSummary from '@/components/RatesSummary';
-import PurchaseInput from '@/components/PurchaseInput';
-import ResultHero from '@/components/ResultHero';
-import Breakdown from '@/components/Breakdown';
-import QuickCompare from '@/components/QuickCompare';
+import { useState, useEffect } from 'react'
+import { TaxProfile, computeTaxLiability, computeSavings, SavingsBreakdown, TaxResult } from '@/lib/tax-engine'
+import TaxProfileComponent from '@/components/TaxProfile'
+import RatesSummary from '@/components/RatesSummary'
+import PurchaseInput from '@/components/PurchaseInput'
+import ResultHero from '@/components/ResultHero'
+import Breakdown from '@/components/Breakdown'
+import QuickCompare from '@/components/QuickCompare'
 
-const STORAGE_KEY = 'writeoff-calc-profile';
+const STORAGE_KEY = 'writeoff-calc-profile'
 
 const DEFAULT_PROFILE: TaxProfile = {
   w2Income: 0,
@@ -17,13 +17,13 @@ const DEFAULT_PROFILE: TaxProfile = {
   filingStatus: 'single',
   taxYear: 2025,
   state: 'Arizona',
-};
+}
 
 function loadProfile(): TaxProfile {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return DEFAULT_PROFILE;
-    const parsed = JSON.parse(stored);
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) return DEFAULT_PROFILE
+    const parsed = JSON.parse(stored)
     // Basic validation
     if (
       typeof parsed.w2Income === 'number' &&
@@ -32,38 +32,37 @@ function loadProfile(): TaxProfile {
       [2025, 2026].includes(parsed.taxYear) &&
       typeof parsed.state === 'string'
     ) {
-      return parsed as TaxProfile;
+      return parsed as TaxProfile
     }
-    return DEFAULT_PROFILE;
+    return DEFAULT_PROFILE
   } catch {
-    return DEFAULT_PROFILE;
+    return DEFAULT_PROFILE
   }
 }
 
 export default function Calculator() {
-  const [profile, setProfile] = useState<TaxProfile>(DEFAULT_PROFILE);
-  const [expenseAmount, setExpenseAmount] = useState<number>(0);
-  const [mounted, setMounted] = useState(false);
+  const [profile, setProfile] = useState<TaxProfile>(DEFAULT_PROFILE)
+  const [expenseAmount, setExpenseAmount] = useState<number>(0)
+  const [mounted, setMounted] = useState(false)
 
   // Load from localStorage on mount
   useEffect(() => {
-    setProfile(loadProfile());
-    setMounted(true);
-  }, []);
+    setProfile(loadProfile())
+    setMounted(true)
+  }, [])
 
   // Save to localStorage on profile change (after mount)
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted) return
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(profile))
     } catch {
       // ignore write errors
     }
-  }, [profile, mounted]);
+  }, [profile, mounted])
 
-  const baseline: TaxResult = computeTaxLiability(profile);
-  const breakdown: SavingsBreakdown | null =
-    expenseAmount > 0 ? computeSavings(profile, expenseAmount) : null;
+  const baseline: TaxResult = computeTaxLiability(profile)
+  const breakdown: SavingsBreakdown | null = expenseAmount > 0 ? computeSavings(profile, expenseAmount) : null
 
   return (
     <div className="receipt">
@@ -80,25 +79,24 @@ export default function Calculator() {
 
       <PurchaseInput value={expenseAmount} onChange={setExpenseAmount} />
 
-      {breakdown && (
-        <ResultHero breakdown={breakdown} expenseAmount={expenseAmount} />
-      )}
+      {breakdown && <ResultHero breakdown={breakdown} expenseAmount={expenseAmount} />}
 
-      {breakdown && (
-        <Breakdown breakdown={breakdown} expenseAmount={expenseAmount} profile={profile} />
-      )}
+      {breakdown && <Breakdown breakdown={breakdown} expenseAmount={expenseAmount} profile={profile} />}
 
       <QuickCompare profile={profile} onSelectAmount={setExpenseAmount} />
 
       {/* Footer */}
       <div className="receipt-footer">
-        YOUR DATA STAYS IN THIS BROWSER<br />
-        NOTHING IS SENT TO ANY SERVER<br />
+        YOUR DATA STAYS IN THIS BROWSER
         <br />
-        FOR ESTIMATION PURPOSES ONLY<br />
-        NOT TAX ADVICE · CONSULT YOUR CPA<br />
-        * * * THANK YOU * * *
+        NOTHING IS SENT TO ANY SERVER
+        <br />
+        <br />
+        FOR ESTIMATION PURPOSES ONLY
+        <br />
+        NOT TAX ADVICE · CONSULT YOUR CPA
+        <br />* * * THANK YOU * * *
       </div>
     </div>
-  );
+  )
 }

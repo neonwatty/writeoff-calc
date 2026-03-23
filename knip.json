@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["app/**/*.{ts,tsx}"],
+  "project": ["**/*.{ts,tsx,js,jsx}", "!**/*.test.{ts,tsx}", "!**/__tests__/**"],
+  "ignoreDependencies": [
+    "eslint-config-next",
+    "semantic-release",
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/github",
+    "tailwindcss",
+    "postcss"
+  ],
+  "eslint": {
+    "config": ["eslint.config.mjs"]
+  },
+  "postcss": {
+    "config": ["postcss.config.mjs"]
+  }
+}
