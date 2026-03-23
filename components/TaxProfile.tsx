@@ -69,6 +69,17 @@ export default function TaxProfile({ profile, onChange }: TaxProfileProps) {
           onChange={handleW2Change}
         />
       </div>
+      <div
+        style={{
+          fontSize: '10px',
+          color: '#999',
+          lineHeight: '1.4',
+          marginBottom: '8px',
+          textAlign: 'right',
+        }}
+      >
+        Sets your tax bracket and affects SE tax on LLC income — both change your write-off savings
+      </div>
 
       <div className="profile-row">
         <span className="label">LLC Net Income</span>
