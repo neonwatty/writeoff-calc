@@ -1,26 +1,416 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: #0a0a0a;
+    color: #e0e0e0;
+    font-family: var(--font-sans), -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  .page {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  /* Receipt paper effect */
+  .receipt {
+    background: #faf9f6;
+    color: #1a1a1a;
+    border-radius: 4px;
+    padding: 36px 32px;
+    font-family: var(--font-mono), monospace;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  .receipt::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: linear-gradient(135deg, #faf9f6 33.33%, transparent 33.33%) 0 0,
+                linear-gradient(225deg, #faf9f6 33.33%, transparent 33.33%) 0 0;
+    background-size: 12px 12px;
+    background-position: top;
+    background-repeat: repeat-x;
+  }
+
+  .receipt-header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px dashed #ccc;
+    margin-bottom: 20px;
+  }
+
+  .receipt-header h1 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #1a1a1a;
+  }
+
+  .receipt-header .subtitle {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* Profile section */
+  .profile-section {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed #ccc;
+  }
+
+  .profile-section .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 12px;
+  }
+
+  .profile-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .profile-row .label {
+    color: #666;
+  }
+
+  .profile-row .value {
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .profile-row input, .profile-row select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #aaa;
+    font-family: var(--font-mono), monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: right;
+    padding: 2px 0;
+    width: 140px;
+    outline: none;
+  }
+
+  .profile-row input:focus, .profile-row select:focus {
+    border-bottom-color: #1a1a1a;
+  }
+
+  .profile-row select {
+    direction: rtl;
+    cursor: pointer;
+  }
+
+  /* Computed rates mini-summary */
+  .rates-summary {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed #ccc;
+  }
+
+  .rates-summary .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  .rates-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #888;
+  }
+
+  .rates-row .rate-val {
+    color: #555;
+    font-weight: 500;
+  }
+
+  /* Purchase input */
+  .purchase-section {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 2px dashed #ccc;
+  }
+
+  .purchase-section .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 12px;
+  }
+
+  .purchase-input-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .purchase-input-wrap .dollar {
+    font-size: 28px;
+    font-weight: 300;
+    color: #aaa;
+  }
+
+  .purchase-input {
+    font-family: var(--font-mono), monospace;
+    font-size: 42px;
+    font-weight: 700;
+    color: #1a1a1a;
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed #ccc;
+    text-align: center;
+    width: 200px;
+    outline: none;
+    padding-bottom: 4px;
+  }
+
+  .purchase-input:focus {
+    border-bottom-color: #1a1a1a;
+  }
+
+  .purchase-input::placeholder {
+    color: #ccc;
+  }
+
+  /* Hero result */
+  .result-hero {
+    text-align: center;
+    padding: 24px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed #ccc;
+  }
+
+  .discount-badge {
+    display: inline-block;
+    background: #15803d;
+    color: #fff;
+    font-size: 36px;
+    font-weight: 700;
+    padding: 8px 24px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .discount-label {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .effective-cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .effective-cost-row .label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .effective-cost-row .amount {
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .original-price {
+    text-decoration: line-through;
+    color: #aaa;
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 8px;
+  }
+
+  .w2-equivalent {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+
+  .w2-equivalent strong {
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  /* Expandable breakdown */
+  .breakdown-toggle {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-mono), monospace;
+    font-size: 12px;
+    color: #888;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 0;
+  }
+
+  .breakdown-toggle:hover {
+    color: #1a1a1a;
+  }
+
+  .breakdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 0;
+  }
+
+  .breakdown.open {
+    max-height: 600px;
+    padding: 16px 0;
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: #555;
+  }
+
+  .breakdown-row .savings {
+    color: #15803d;
+    font-weight: 500;
+  }
+
+  .breakdown-row .cost {
+    color: #b91c1c;
+    font-weight: 500;
+  }
+
+  .breakdown-note {
+    font-size: 11px;
+    color: #999;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 2px solid #e0e0e0;
+    line-height: 1.5;
+  }
+
+  .breakdown-divider {
+    border: none;
+    border-top: 1px dashed #ccc;
+    margin: 12px 0;
+  }
+
+  .breakdown-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 700;
+    color: #15803d;
+  }
+
+  /* Quick compare strip */
+  .quick-compare {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px dashed #ccc;
+  }
+
+  .quick-compare .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .compare-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
+  }
+
+  .compare-item {
+    text-align: center;
+    flex: 1;
+    padding: 8px 4px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .compare-item:hover {
+    background: rgba(0,0,0,0.04);
+  }
+
+  .compare-item .price {
+    font-size: 12px;
+    color: #888;
+  }
+
+  .compare-item .discount {
+    font-size: 14px;
+    font-weight: 600;
+    color: #15803d;
+  }
+
+  .compare-item .effective {
+    font-size: 11px;
+    color: #aaa;
+  }
+
+  /* Footer */
+  .receipt-footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 2px dashed #ccc;
+    text-align: center;
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* Section label (shared utility) */
+  .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 10px;
+  }
