@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import { SavingsBreakdown } from '@/lib/tax-engine';
-import { formatCurrency, formatPercent } from '@/lib/format';
+import { SavingsBreakdown } from '@/lib/tax-engine'
+import { formatCurrency, formatPercent } from '@/lib/format'
 
 interface ResultHeroProps {
-  breakdown: SavingsBreakdown;
-  expenseAmount: number;
+  breakdown: SavingsBreakdown
+  expenseAmount: number
 }
 
 export default function ResultHero({ breakdown, expenseAmount }: ResultHeroProps) {
-  if (expenseAmount <= 0) return <></>;
+  if (expenseAmount <= 0) return <></>
 
   return (
     <div className="result-hero">
@@ -25,9 +25,10 @@ export default function ResultHero({ breakdown, expenseAmount }: ResultHeroProps
       </div>
 
       <div className="w2-equivalent">
-        From your W-2 paycheck, this would cost<br />
+        From your W-2 paycheck, this would cost
+        <br />
         <strong>{formatCurrency(breakdown.w2PreTaxEquivalent)}</strong> in pre-tax earnings
       </div>
     </div>
-  );
+  )
 }

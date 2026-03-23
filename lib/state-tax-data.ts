@@ -8,8 +8,8 @@
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface StateBracket {
-  rate: number;
-  floor: number;
+  rate: number
+  floor: number
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -24,7 +24,7 @@ export const NO_INCOME_TAX_STATES: string[] = [
   'Texas',
   'Washington',
   'Wyoming',
-];
+]
 
 export const STATE_WARNINGS: Record<string, string> = {
   Maryland: 'Your state also has county/local income taxes not included here',
@@ -32,7 +32,7 @@ export const STATE_WARNINGS: Record<string, string> = {
   California: 'CA charges an $800/year minimum LLC franchise tax',
   Ohio: 'Your state has local/municipal income taxes not included here',
   Pennsylvania: 'Your state has local/municipal income taxes not included here',
-};
+}
 
 // ─── State Bracket Data ───────────────────────────────────────────────────────
 
@@ -128,7 +128,7 @@ const STATE_BRACKETS: Record<string, StateBracket[]> = {
     { rate: 0.079, floor: 125_000 },
     { rate: 0.0825, floor: 175_000 },
     { rate: 0.09, floor: 225_000 },
-    { rate: 0.10, floor: 275_000 },
+    { rate: 0.1, floor: 275_000 },
     { rate: 0.11, floor: 325_000 },
   ],
 
@@ -292,7 +292,7 @@ const STATE_BRACKETS: Record<string, StateBracket[]> = {
     { rate: 0.053, floor: 29_370 },
     { rate: 0.0765, floor: 323_290 },
   ],
-};
+}
 
 // ─── State Standard Deductions (2025, single filer, approximate) ─────────────
 // Sources: state DOR websites, Tax Foundation
@@ -301,63 +301,62 @@ const STATE_BRACKETS: Record<string, StateBracket[]> = {
 
 const STATE_STANDARD_DEDUCTIONS: Record<string, number> = {
   Alabama: 3_000,
-  Arizona: 0,          // AZ taxes from AGI
+  Arizona: 0, // AZ taxes from AGI
   Arkansas: 2_340,
   California: 5_540,
-  Colorado: 15_750,    // CO taxes from federal taxable income — use federal std deduction
-  Connecticut: 0,      // CT uses AGI
+  Colorado: 15_750, // CO taxes from federal taxable income — use federal std deduction
+  Connecticut: 0, // CT uses AGI
   Delaware: 3_250,
   'District of Columbia': 0, // DC uses AGI
   Georgia: 5_400,
   Hawaii: 2_200,
-  Idaho: 15_750,       // ID conforms to federal standard deduction
-  Illinois: 0,         // IL taxes from AGI (flat rate)
-  Indiana: 0,          // IN taxes from AGI (flat rate)
-  Iowa: 15_750,        // IA conforms to federal standard deduction
+  Idaho: 15_750, // ID conforms to federal standard deduction
+  Illinois: 0, // IL taxes from AGI (flat rate)
+  Indiana: 0, // IN taxes from AGI (flat rate)
+  Iowa: 15_750, // IA conforms to federal standard deduction
   Kansas: 3_500,
   Kentucky: 3_160,
-  Louisiana: 0,        // LA uses AGI
-  Maine: 14_600,       // ME caps at prior-year federal std deduction
+  Louisiana: 0, // LA uses AGI
+  Maine: 14_600, // ME caps at prior-year federal std deduction
   Maryland: 2_550,
-  Massachusetts: 0,    // MA taxes from AGI
-  Michigan: 0,         // MI taxes from AGI (flat rate)
+  Massachusetts: 0, // MA taxes from AGI
+  Michigan: 0, // MI taxes from AGI (flat rate)
   Minnesota: 14_575,
   Mississippi: 2_300,
-  Missouri: 15_750,   // MO conforms to federal standard deduction
+  Missouri: 15_750, // MO conforms to federal standard deduction
   Montana: 5_540,
   Nebraska: 7_900,
-  'New Jersey': 0,     // NJ taxes from AGI
-  'New Mexico': 0,     // NM taxes from AGI
+  'New Jersey': 0, // NJ taxes from AGI
+  'New Mexico': 0, // NM taxes from AGI
   'New York': 8_000,
   'North Carolina': 10_750, // NC starts from federal AGI then applies its own std deduction
   'North Dakota': 15_750, // ND uses federal taxable income — use federal std deduction
-  Ohio: 0,             // OH uses AGI
+  Ohio: 0, // OH uses AGI
   Oklahoma: 6_350,
   Oregon: 2_745,
-  Pennsylvania: 0,     // PA taxes from AGI (flat rate)
+  Pennsylvania: 0, // PA taxes from AGI (flat rate)
   'Rhode Island': 10_550,
   'South Carolina': 15_750, // SC conforms to federal standard deduction
-  Utah: 0,             // UT taxes from AGI (flat rate with credit)
+  Utah: 0, // UT taxes from AGI (flat rate with credit)
   Vermont: 7_000,
   Virginia: 8_000,
-  'West Virginia': 0,  // WV taxes from AGI
+  'West Virginia': 0, // WV taxes from AGI
   Wisconsin: 12_760,
-};
+}
 
 /**
  * Returns the approximate state standard deduction for a single filer.
  * Returns 0 for no-tax states, states that use AGI directly, and unknown states.
  */
 export function getStateStandardDeduction(state: string): number {
-  return STATE_STANDARD_DEDUCTIONS[state] ?? 0;
+  return STATE_STANDARD_DEDUCTIONS[state] ?? 0
 }
 
 // ─── ALL_STATES ───────────────────────────────────────────────────────────────
 
-export const ALL_STATES: string[] = [
-  ...Object.keys(STATE_BRACKETS),
-  ...NO_INCOME_TAX_STATES,
-].sort((a, b) => a.localeCompare(b));
+export const ALL_STATES: string[] = [...Object.keys(STATE_BRACKETS), ...NO_INCOME_TAX_STATES].sort((a, b) =>
+  a.localeCompare(b),
+)
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
@@ -366,8 +365,8 @@ export const ALL_STATES: string[] = [
  * income tax (or is unknown).
  */
 export function getStateTaxInfo(state: string): StateBracket[] | null {
-  const brackets = STATE_BRACKETS[state];
-  return brackets ?? null;
+  const brackets = STATE_BRACKETS[state]
+  return brackets ?? null
 }
 
 /**
@@ -375,24 +374,24 @@ export function getStateTaxInfo(state: string): StateBracket[] | null {
  * Returns 0 for no-tax states. Returns 0 for unknown states (graceful fallback).
  */
 export function calculateStateTax(state: string, taxableIncome: number): number {
-  if (NO_INCOME_TAX_STATES.includes(state)) return 0;
+  if (NO_INCOME_TAX_STATES.includes(state)) return 0
 
-  const brackets = STATE_BRACKETS[state];
-  if (!brackets) return 0;
+  const brackets = STATE_BRACKETS[state]
+  if (!brackets) return 0
 
-  let tax = 0;
+  let tax = 0
 
   for (let i = 0; i < brackets.length; i++) {
-    const { rate, floor } = brackets[i];
-    const ceiling = i + 1 < brackets.length ? brackets[i + 1].floor : Infinity;
+    const { rate, floor } = brackets[i]
+    const ceiling = i + 1 < brackets.length ? brackets[i + 1].floor : Infinity
 
-    if (taxableIncome <= floor) break;
+    if (taxableIncome <= floor) break
 
-    const taxableInBracket = Math.min(taxableIncome, ceiling) - floor;
-    tax += taxableInBracket * rate;
+    const taxableInBracket = Math.min(taxableIncome, ceiling) - floor
+    tax += taxableInBracket * rate
   }
 
-  return Math.round(tax * 100) / 100;
+  return Math.round(tax * 100) / 100
 }
 
 /**
@@ -400,20 +399,20 @@ export function calculateStateTax(state: string, taxableIncome: number): number 
  * given state. Returns 0 for no-tax states or unknown states.
  */
 export function getStateMarginalRate(state: string, taxableIncome: number): number {
-  if (NO_INCOME_TAX_STATES.includes(state)) return 0;
+  if (NO_INCOME_TAX_STATES.includes(state)) return 0
 
-  const brackets = STATE_BRACKETS[state];
-  if (!brackets) return 0;
+  const brackets = STATE_BRACKETS[state]
+  if (!brackets) return 0
 
-  let marginalRate = brackets[0].rate;
+  let marginalRate = brackets[0].rate
 
   for (let i = 0; i < brackets.length; i++) {
     if (taxableIncome >= brackets[i].floor) {
-      marginalRate = brackets[i].rate;
+      marginalRate = brackets[i].rate
     } else {
-      break;
+      break
     }
   }
 
-  return marginalRate;
+  return marginalRate
 }
