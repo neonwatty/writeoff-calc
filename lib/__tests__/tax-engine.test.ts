@@ -94,10 +94,10 @@ describe('computeTaxLiability', () => {
   });
 
   describe('state tax (base profile, Arizona)', () => {
-    it('state tax uses AGI minus standard deduction as taxable base', () => {
+    it('state tax uses AGI as taxable base (AZ has no state standard deduction)', () => {
       const result = computeTaxLiability(baseProfile);
-      // Arizona: 2.5% flat on 211560.54 = 5289.01
-      expect(result.stateTax).toBeCloseTo(5_289.01, 1);
+      // Arizona: 2.5% flat on full AGI of 227310.54 = 5682.76
+      expect(result.stateTax).toBeCloseTo(5_682.76, 1);
     });
   });
 

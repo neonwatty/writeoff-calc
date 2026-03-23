@@ -1,5 +1,5 @@
 import { getTaxData } from './tax-data';
-import { calculateStateTax } from './state-tax-data';
+import { calculateStateTax, getStateStandardDeduction } from './state-tax-data';
 import { computeW2PreTaxEquivalent } from './w2-equivalent';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -138,8 +138,9 @@ export function computeTaxLiability(profile: TaxProfile): TaxResult {
   );
 
   // ── Step 6: State Tax ────────────────────────────────────────────────────────
-  // State taxable base = AGI - standard deduction (floored at 0)
-  const stateTaxableIncome = Math.max(0, agi - standardDeduction);
+  // Use state-specific standard deduction (if any) instead of federal
+  const stateStdDeduction = getStateStandardDeduction(state);
+  const stateTaxableIncome = Math.max(0, agi - stateStdDeduction);
   const stateTax = calculateStateTax(state, stateTaxableIncome);
 
   // ── Step 7: Total ────────────────────────────────────────────────────────────
@@ -216,7 +217,7 @@ export function computeSavings(profile: TaxProfile, expense: number): SavingsBre
       profile.w2Income,
       getTaxData(profile.taxYear, profile.filingStatus).ssWageBase,
       profile.state,
-      Math.max(0, baseline.agi - baseline.standardDeduction)
+      Math.max(0, baseline.agi - getStateStandardDeduction(profile.state))
     ),
     baseline,
     withExpense,

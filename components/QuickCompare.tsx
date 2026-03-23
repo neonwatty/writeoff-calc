@@ -24,7 +24,19 @@ export default function QuickCompare({ profile, onSelectAmount }: QuickComparePr
       <div className="section-label">Quick Compare</div>
       <div className="compare-row">
         {results.map(({ amount, savings }) => (
-          <div className="compare-item" key={amount} onClick={() => onSelectAmount(amount)}>
+          <div
+            className="compare-item"
+            key={amount}
+            role="button"
+            tabIndex={0}
+            onClick={() => onSelectAmount(amount)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onSelectAmount(amount);
+              }
+            }}
+          >
             <div className="price">{formatCurrency(amount)}</div>
             <div className="discount">{formatPercent(savings.discountPct)}</div>
             <div className="effective">&rarr; {formatCurrency(savings.effectiveCost)}</div>

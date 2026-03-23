@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { TaxProfile, SavingsBreakdown } from '@/lib/tax-engine';
 import { formatCurrency } from '@/lib/format';
 import { getTaxData } from '@/lib/tax-data';
+import { getStateTaxInfo, NO_INCOME_TAX_STATES } from '@/lib/state-tax-data';
 
 interface BreakdownProps {
   breakdown: SavingsBreakdown;
@@ -62,7 +63,14 @@ export default function Breakdown({ breakdown, expenseAmount, profile }: Breakdo
           <span className="savings">-{formatCurrency(breakdown.stateSavings)}</span>
         </div>
         <div className="breakdown-note">
-          Flat rate on {formatCurrency(agiReduction)} AGI reduction
+          {(() => {
+            if (NO_INCOME_TAX_STATES.includes(profile.state)) return 'No state income tax';
+            const brackets = getStateTaxInfo(profile.state);
+            if (!brackets) return `On ${formatCurrency(agiReduction)} AGI reduction`;
+            return brackets.length <= 1
+              ? `Flat ${(brackets[0].rate * 100).toFixed(1).replace(/\.0$/, '')}% rate on ${formatCurrency(agiReduction)} AGI reduction`
+              : `At your marginal rate on ${formatCurrency(agiReduction)} AGI reduction`;
+          })()}
         </div>
 
         {/* Additional Medicare savings */}

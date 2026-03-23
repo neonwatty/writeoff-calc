@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatCurrency, formatPercent, parseCurrencyInput } from '../format';
+import { formatCurrency, formatPercent, parseCurrencyInput, addCommas } from '../format';
 
 describe('formatCurrency', () => {
   it('formats positive numbers', () => expect(formatCurrency(1234.56)).toBe('$1,234.56'));
@@ -19,4 +19,11 @@ describe('parseCurrencyInput', () => {
   it('strips $ and commas', () => expect(parseCurrencyInput('$1,000')).toBe(1000));
   it('handles empty string', () => expect(parseCurrencyInput('')).toBe(0));
   it('handles decimals', () => expect(parseCurrencyInput('1,234.56')).toBe(1234.56));
+});
+
+describe('addCommas', () => {
+  it('adds commas to thousands', () => expect(addCommas('1000')).toBe('1,000'));
+  it('adds commas to millions', () => expect(addCommas('1000000')).toBe('1,000,000'));
+  it('leaves small numbers alone', () => expect(addCommas('999')).toBe('999'));
+  it('handles single digit', () => expect(addCommas('0')).toBe('0'));
 });

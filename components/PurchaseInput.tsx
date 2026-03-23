@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { parseCurrencyInput } from '@/lib/format';
-
-function addCommas(n: string): string {
-  return n.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+import { parseCurrencyInput, addCommas } from '@/lib/format';
 
 interface PurchaseInputProps {
   value: number;
@@ -45,7 +41,7 @@ export default function PurchaseInput({ value, onChange }: PurchaseInputProps) {
             setRawValue(input);
             const parsed = parseCurrencyInput(input);
             if (!isNaN(parsed)) {
-              onChange(parsed);
+              onChange(Math.max(0, parsed));
             }
           }}
         />
