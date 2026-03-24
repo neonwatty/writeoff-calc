@@ -17,7 +17,6 @@ const tools = [
     href: '/calculators/home-office',
     title: 'Home Office Costs',
     description: 'See the real monthly cost of your rent, internet, and utilities after your home office deduction.',
-    comingSoon: true,
   },
   {
     href: '/calculators/quarterly-estimates',
