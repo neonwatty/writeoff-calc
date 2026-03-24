@@ -13,8 +13,12 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Write-Off Calculator',
-  description: 'See the real cost of business purchases after tax write-offs',
+  title: {
+    default: 'Tax Calculators for W-2 + LLC Owners',
+    template: '%s | Tax Calculators',
+  },
+  description:
+    'Free tax calculators for W-2 employees with a side business. See the real cost of write-offs, home office deductions, and quarterly estimated taxes.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

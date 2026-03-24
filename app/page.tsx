@@ -1,9 +1,5 @@
-import CalculatorLoader from '@/components/CalculatorLoader'
+import { redirect } from 'next/navigation'
 
 export default function Home() {
-  return (
-    <main className="page">
-      <CalculatorLoader />
-    </main>
-  )
+  redirect('/calculators')
 }
