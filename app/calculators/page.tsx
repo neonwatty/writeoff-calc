@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import NavBar from '@/components/NavBar'
 
 export const metadata: Metadata = {
   title: 'Tax Calculators for W-2 + LLC Owners — 2025–2026',
@@ -28,6 +29,7 @@ const tools = [
 export default function CalculatorsHub() {
   return (
     <main className="page">
+      <NavBar />
       <div className="receipt">
         <div className="receipt-header">
           <h1>Tax Calculators</h1>

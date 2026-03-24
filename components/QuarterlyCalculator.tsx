@@ -2,10 +2,12 @@
 
 import { useState, useMemo } from 'react'
 import { useProfile } from '@/lib/use-profile'
+import { computeTaxLiability } from '@/lib/tax-engine'
 import { computeQuarterlyEstimates } from '@/lib/quarterly-engine'
 import type { QuarterlyResult } from '@/lib/quarterly-engine'
 import { parseCurrencyInput } from '@/lib/format'
-import SharedProfile from '@/components/SharedProfile'
+import NavBar from '@/components/NavBar'
+import ProfileSummary from '@/components/ProfileSummary'
 import TaxPicture from '@/components/TaxPicture'
 import QuarterlyPaymentBox from '@/components/QuarterlyPaymentBox'
 import W4Tip from '@/components/W4Tip'
@@ -155,7 +157,7 @@ function ResultsSection({ result }: { result: QuarterlyResult }) {
 }
 
 export default function QuarterlyCalculator() {
-  const { profile, setProfile } = useProfile()
+  const { profile } = useProfile()
   const [annualWithholding, setAnnualWithholding] = useState(0)
   const [priorYearTax, setPriorYearTax] = useState(0)
 
@@ -165,39 +167,43 @@ export default function QuarterlyCalculator() {
   )
 
   const showResults = annualWithholding > 0 || profile.llcNetIncome > 0
+  const baseline = computeTaxLiability(profile)
 
   return (
-    <div className="receipt">
-      <div className="receipt-header">
-        <h1>Quarterly Estimates</h1>
-        <div className="subtitle">
-          {profile.state} &middot; {profile.taxYear}
+    <>
+      <NavBar />
+      <div className="receipt">
+        <div className="receipt-header">
+          <h1>Quarterly Estimates</h1>
+          <div className="subtitle">
+            {profile.state} &middot; {profile.taxYear}
+          </div>
+        </div>
+
+        <ProfileSummary profile={profile} baseline={baseline} />
+
+        <WithholdingSection
+          annualWithholding={annualWithholding}
+          priorYearTax={priorYearTax}
+          onWithholdingChange={setAnnualWithholding}
+          onPriorYearTaxChange={setPriorYearTax}
+        />
+
+        {showResults && <ResultsSection result={result} />}
+        {showResults && !result.noPaymentNeeded && <W4Tip w4Increase={result.w4Increase} />}
+
+        <div className="receipt-footer">
+          YOUR DATA STAYS IN THIS BROWSER
+          <br />
+          NOTHING IS SENT TO ANY SERVER
+          <br />
+          <br />
+          FOR ESTIMATION PURPOSES ONLY
+          <br />
+          NOT TAX ADVICE &middot; CONSULT YOUR CPA
+          <br />* * * THANK YOU * * *
         </div>
       </div>
-
-      <SharedProfile profile={profile} onChange={setProfile} />
-
-      <WithholdingSection
-        annualWithholding={annualWithholding}
-        priorYearTax={priorYearTax}
-        onWithholdingChange={setAnnualWithholding}
-        onPriorYearTaxChange={setPriorYearTax}
-      />
-
-      {showResults && <ResultsSection result={result} />}
-      {showResults && !result.noPaymentNeeded && <W4Tip w4Increase={result.w4Increase} />}
-
-      <div className="receipt-footer">
-        YOUR DATA STAYS IN THIS BROWSER
-        <br />
-        NOTHING IS SENT TO ANY SERVER
-        <br />
-        <br />
-        FOR ESTIMATION PURPOSES ONLY
-        <br />
-        NOT TAX ADVICE &middot; CONSULT YOUR CPA
-        <br />* * * THANK YOU * * *
-      </div>
-    </div>
+    </>
   )
 }

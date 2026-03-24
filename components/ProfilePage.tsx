@@ -2,86 +2,12 @@
 
 import { useState } from 'react'
 import type { TaxProfile } from '@/lib/tax-engine'
+import { computeTaxLiability } from '@/lib/tax-engine'
+import { useProfile } from '@/lib/use-profile'
 import { ALL_STATES, STATE_WARNINGS } from '@/lib/state-tax-data'
 import { parseCurrencyInput } from '@/lib/format'
-
-interface SharedProfileProps {
-  profile: TaxProfile
-  onChange: (profile: TaxProfile) => void
-}
-
-const STATE_ABBR: Record<string, string> = {
-  Alabama: 'AL',
-  Alaska: 'AK',
-  Arizona: 'AZ',
-  Arkansas: 'AR',
-  California: 'CA',
-  Colorado: 'CO',
-  Connecticut: 'CT',
-  Delaware: 'DE',
-  Florida: 'FL',
-  Georgia: 'GA',
-  Hawaii: 'HI',
-  Idaho: 'ID',
-  Illinois: 'IL',
-  Indiana: 'IN',
-  Iowa: 'IA',
-  Kansas: 'KS',
-  Kentucky: 'KY',
-  Louisiana: 'LA',
-  Maine: 'ME',
-  Maryland: 'MD',
-  Massachusetts: 'MA',
-  Michigan: 'MI',
-  Minnesota: 'MN',
-  Mississippi: 'MS',
-  Missouri: 'MO',
-  Montana: 'MT',
-  Nebraska: 'NE',
-  Nevada: 'NV',
-  'New Hampshire': 'NH',
-  'New Jersey': 'NJ',
-  'New Mexico': 'NM',
-  'New York': 'NY',
-  'North Carolina': 'NC',
-  'North Dakota': 'ND',
-  Ohio: 'OH',
-  Oklahoma: 'OK',
-  Oregon: 'OR',
-  Pennsylvania: 'PA',
-  'Rhode Island': 'RI',
-  'South Carolina': 'SC',
-  'South Dakota': 'SD',
-  Tennessee: 'TN',
-  Texas: 'TX',
-  Utah: 'UT',
-  Vermont: 'VT',
-  Virginia: 'VA',
-  Washington: 'WA',
-  'West Virginia': 'WV',
-  Wisconsin: 'WI',
-  Wyoming: 'WY',
-  'District of Columbia': 'DC',
-}
-
-const FILING_LABELS: Record<string, string> = {
-  single: 'Single',
-  mfj: 'MFJ',
-  mfs: 'MFS',
-  hoh: 'HoH',
-}
-
-function formatCompact(amount: number): string {
-  if (amount >= 1_000_000) {
-    const m = amount / 1_000_000
-    return `$${m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)}M`
-  }
-  if (amount >= 1_000) {
-    const k = amount / 1_000
-    return `$${k % 1 === 0 ? k.toFixed(0) : k.toFixed(1)}K`
-  }
-  return `$${amount}`
-}
+import RatesSummary from '@/components/RatesSummary'
+import NavBar from '@/components/NavBar'
 
 function formatForDisplay(amount: number): string {
   const abs = Math.abs(amount)
@@ -92,19 +18,7 @@ function formatForDisplay(amount: number): string {
   return amount < 0 ? `-${formatted}` : formatted
 }
 
-function ProfileSummary({ profile }: { profile: TaxProfile }) {
-  const abbr = STATE_ABBR[profile.state] ?? profile.state
-  const filing = FILING_LABELS[profile.filingStatus] ?? profile.filingStatus
-  const parts: string[] = []
-  if (profile.w2Income > 0) parts.push(`${formatCompact(profile.w2Income)} W-2`)
-  if (profile.llcNetIncome > 0) parts.push(`${formatCompact(profile.llcNetIncome)} LLC`)
-  parts.push(filing)
-  parts.push(abbr)
-  parts.push(String(profile.taxYear))
-  return <span>{parts.join(' \u00b7 ')}</span>
-}
-
-function ProfileForm({ profile, onChange }: SharedProfileProps) {
+function ProfileForm({ profile, onChange }: { profile: TaxProfile; onChange: (profile: TaxProfile) => void }) {
   const [w2Display, setW2Display] = useState(() => formatForDisplay(profile.w2Income))
   const [llcDisplay, setLlcDisplay] = useState(() => formatForDisplay(profile.llcNetIncome))
 
@@ -249,47 +163,51 @@ function ProfileForm({ profile, onChange }: SharedProfileProps) {
   )
 }
 
-export default function SharedProfile({ profile, onChange }: SharedProfileProps) {
-  const hasFilled = profile.w2Income > 0 || profile.llcNetIncome > 0
-  const [expanded, setExpanded] = useState(!hasFilled)
-
-  if (hasFilled && !expanded) {
-    return (
-      <div className="profile-section" onClick={() => setExpanded(true)} style={{ cursor: 'pointer' }}>
-        <div className="section-label">Your Tax Profile</div>
-        <div
-          style={{
-            textAlign: 'center',
-            fontSize: '13px',
-            padding: '4px 0',
-            color: '#666',
-          }}
-        >
-          <ProfileSummary profile={profile} />
-        </div>
-        <div
-          style={{
-            textAlign: 'center',
-            fontSize: '10px',
-            color: '#999',
-          }}
-        >
-          tap to edit
-        </div>
-      </div>
-    )
-  }
+export default function ProfilePage() {
+  const { profile, setProfile } = useProfile()
+  const baseline = computeTaxLiability(profile)
 
   return (
-    <div className="profile-section">
-      <div
-        className="section-label"
-        onClick={() => hasFilled && setExpanded(false)}
-        style={hasFilled ? { cursor: 'pointer' } : undefined}
-      >
-        Your Tax Profile
+    <>
+      <NavBar />
+      <div className="receipt">
+        <div className="receipt-header">
+          <h1>Your Tax Profile</h1>
+          <div className="subtitle">Used across all calculators</div>
+        </div>
+
+        <div className="profile-section">
+          <div className="section-label">Your Tax Profile</div>
+          <ProfileForm profile={profile} onChange={setProfile} />
+        </div>
+
+        <RatesSummary baseline={baseline} state={profile.state} />
+
+        <div
+          style={{
+            fontSize: '12px',
+            color: '#15803d',
+            lineHeight: '1.6',
+            textAlign: 'center',
+            padding: '12px 0',
+            marginBottom: '16px',
+          }}
+        >
+          ✓ Your profile is automatically saved in this browser. It will be here next time you visit.
+        </div>
+
+        <div className="receipt-footer">
+          YOUR DATA STAYS IN THIS BROWSER
+          <br />
+          NOTHING IS SENT TO ANY SERVER
+          <br />
+          <br />
+          FOR ESTIMATION PURPOSES ONLY
+          <br />
+          NOT TAX ADVICE &middot; CONSULT YOUR CPA
+          <br />* * * THANK YOU * * *
+        </div>
       </div>
-      <ProfileForm profile={profile} onChange={onChange} />
-    </div>
+    </>
   )
 }

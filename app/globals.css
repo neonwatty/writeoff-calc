@@ -24,11 +24,51 @@ body {
   max-width: 480px;
 }
 
+/* Navigation tabs */
+.nav-bar {
+  display: flex;
+  gap: 2px;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.nav-item {
+  flex: 1;
+  text-align: center;
+  padding: 9px 2px;
+  background: #1a1a1a;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-item:first-child {
+  border-radius: 4px 0 0 0;
+}
+
+.nav-item:last-child {
+  border-radius: 0 4px 0 0;
+}
+
+.nav-item:hover {
+  color: #ccc;
+  background: #222;
+}
+
+.nav-item.active {
+  background: #faf9f6;
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
 /* Receipt paper effect */
 .receipt {
   background: #faf9f6;
   color: #1a1a1a;
-  border-radius: 4px;
+  border-radius: 0 0 4px 4px;
   padding: 36px 32px;
   font-family: var(--font-mono), monospace;
   position: relative;
