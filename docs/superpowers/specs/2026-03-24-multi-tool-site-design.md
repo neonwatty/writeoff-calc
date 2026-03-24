@@ -28,7 +28,7 @@ Move to `/calculators/write-off`. No functional changes — just routing.
 - Office square footage
 - Total home square footage (auto-calculates business-use %)
 - Monthly expenses, each with an editable business-use percentage:
-  - Rent or mortgage interest (defaults to sqft %)
+  - Rent or mortgage interest (defaults to sqft %). Label includes helper text: "For mortgages, enter monthly interest only (not principal). Check your lender statement."
   - Internet (defaults to 50%, with note: "IRS provides no specific percentage — use your reasonable estimate")
   - Phone/cell (defaults to 50%, same note)
   - Electric (defaults to sqft %)
@@ -54,10 +54,12 @@ Move to `/calculators/write-off`. No functional changes — just routing.
 - Deduction flows to Schedule C line 30
 
 #### Edge Cases to Surface
-- Simplified vs actual comparison with recommendation
+- Simplified vs actual comparison with recommendation (engine runs both methods internally)
 - Depreciation recapture warning for homeowners using actual method
 - HOA fees: include with caveat ("not explicitly addressed by IRS — consult your CPA")
-- Deduction limited to net business income (show warning if exceeded)
+- Deduction limited to net business income — `home-office-engine.ts` must cap the deductible amount before passing to `computeSavings` (show warning if exceeded)
+- Exclusive-use disclaimer in educational content: "Your home office must be used regularly and exclusively for business to qualify"
+- State estimated taxes are out of scope (federal only)
 
 ### 3. Quarterly Estimated Tax Calculator (new at `/calculators/quarterly-estimates`)
 
@@ -66,15 +68,14 @@ Move to `/calculators/write-off`. No functional changes — just routing.
 - **Page title:** "Quarterly Estimated Tax Calculator 2025–2026 — W-2 + Self-Employment"
 
 #### Inputs (beyond shared profile)
-- Annual W-2 withholding (or per-paycheck withholding × pay frequency)
-- Prior year total tax liability (for safe harbor)
+- Annual W-2 withholding — single field for total annual amount. Helper text: "Check your most recent pay stub for YTD federal withholding, or multiply per-paycheck withholding by number of pay periods."
+- Prior year total tax liability (for safe harbor) — helper text: "Line 24 on your prior year Form 1040"
 - Option: "First year with LLC income" checkbox (uses prior year W-2-only liability)
 
 #### Outputs (receipt format)
 - Total estimated tax liability (from existing tax engine)
 - Minus W-2 withholding already covers
-- Minus any home office / write-off deductions (if shared data available)
-- = Remaining LLC tax obligation
+- = Remaining LLC tax obligation (home office and other deductions are already reflected in the LLC net income entered in the shared profile — users should enter their net income after expenses)
 - ÷ 4 = quarterly payment amount
 - Due dates for current tax year (with weekend adjustments)
 - Safe harbor method used and explanation
@@ -89,26 +90,31 @@ Move to `/calculators/write-off`. No functional changes — just routing.
 - Safe harbor: lesser of 90% current year OR 100%/110% prior year
 - W-2 withholding counts toward obligation
 - Due dates: Apr 15, Jun 15, Sep 15, Jan 15 (adjusted for weekends/holidays)
-- 2025 Q2 due June 16 (June 15 falls on Sunday)
+- Due date adjustments: hardcoded lookup table for 2025 and 2026 (e.g., 2025 Q2 = June 16 because June 15 is Sunday). Not algorithmic — just a data table matching the tax year field.
 - Underpayment penalty: 7% annual interest, per-quarter
 - W-4 withholding treated as paid evenly throughout year
+- State estimated taxes: out of scope (federal only)
 
 ## Site Architecture
 
 ### Routing
 ```
-/                           → redirect to /calculators
+/                           → redirect to /calculators (via next.config.ts redirects array)
 /calculators                → hub page (links to all three tools)
 /calculators/write-off      → existing calculator, moved here
 /calculators/home-office    → new home office cost calculator
 /calculators/quarterly-estimates → new quarterly estimated tax calculator
 ```
 
+Each calculator page uses `dynamic(() => import(...), { ssr: false })` for the interactive calculator component (preserving the existing pattern from `CalculatorLoader`), while the page shell, educational content, H1, and FAQ are server-rendered for SEO.
+
 ### Shared Tax Profile
 - Collapsible section at top of each calculator page
-- Auto-collapses when already filled out, shows one-line summary (e.g., "$150K W-2 · $80K LLC · Single · AZ · 2025")
-- Persisted in localStorage, shared key across all tools
+- Auto-collapses when profile has non-zero income values (either W-2 or LLC > 0), shows one-line summary (e.g., "$150K W-2 · $80K LLC · Single · AZ · 2025")
+- Persisted in localStorage under key `'writeoff-calc-profile'` (existing key, shared across all tools)
 - Fields: W-2 income, LLC net income, filing status, state, tax year
+- Replaces existing `components/TaxProfile.tsx` (which is deleted)
+- Assumes single-member LLC taxed as sole proprietorship (Schedule C). S-corp and partnership elections are out of scope.
 
 ### Hub Page (`/calculators`)
 - Links to all three calculators with brief descriptions
@@ -153,7 +159,7 @@ All three tools use the existing receipt theme:
 ### Shared Code
 - `lib/tax-engine.ts` — existing, powers all three calculators
 - `lib/tax-data.ts` — existing federal bracket data
-- `lib/state-tax-data.ts` — existing state data + new state standard deductions
+- `lib/state-tax-data.ts` — existing state data (already includes state standard deductions)
 - `lib/format.ts` — existing formatting utilities
 - `lib/w2-equivalent.ts` — existing W2 pre-tax equivalent
 
@@ -176,6 +182,12 @@ All three tools use the existing receipt theme:
 5. Each calculator calls the appropriate engine function with the shared profile + local inputs
 6. Results rendered in receipt format
 
+## Assumptions and Limitations
+- **Single-member LLC taxed as sole proprietorship** (Schedule C). S-corp elections and partnerships are out of scope.
+- **State tax brackets are single-filer only.** MFJ/MFS/HOH state calculations will be approximate. This is a pre-existing limitation documented in `state-tax-data.ts`.
+- **State estimated taxes are out of scope.** Only federal quarterly payments are calculated.
+- **2025 and 2026 tax year data are both complete** in the existing `tax-data.ts` and `state-tax-data.ts`.
+
 ## What This Spec Does NOT Cover
 - Domain name selection (deferred)
 - Blog/content marketing beyond on-page educational content
@@ -183,3 +195,4 @@ All three tools use the existing receipt theme:
 - Mobile app
 - State-specific calculator pages (future programmatic SEO opportunity)
 - Profession-specific calculator pages (future)
+- Cross-calculator data sharing (each calculator's local inputs are independent; the quarterly tool does not auto-import home office deductions)
