@@ -489,7 +489,29 @@ export default function CalculatorsHub() {
           <div className="subtitle">For W-2 + LLC Owners</div>
         </div>
 
-        <div style={{ padding: '8px 0' }}>
+        {/* Landing message */}
+        <div className="profile-section">
+          <div style={{ fontSize: '13px', color: '#555', lineHeight: '1.7' }}>
+            <p style={{ marginBottom: '12px' }}>
+              When you buy a $2,000 laptop for your business, you pay $2,000 today. Months later, at tax time,
+              you &ldquo;write it off&rdquo; and get some of that money back. But how much? 30%? 40%? It depends on
+              your tax bracket, your state, your self-employment tax &mdash; and nobody does that math at checkout.
+            </p>
+            <p style={{ marginBottom: '12px' }}>
+              Your tax rate is a discount on every business expense. A 34% marginal rate means everything you buy
+              for your business is permanently 34% off. Your rent, your internet, your phone &mdash; all discounted.
+              You just don&rsquo;t see it on the receipt.
+            </p>
+            <p>
+              These calculators show you the real price &mdash; what things{' '}
+              <em>actually</em> cost you after the write-off. Not at tax time. Right now, at the moment
+              you&rsquo;re deciding whether to buy.
+            </p>
+          </div>
+        </div>
+
+        {/* Tool links */}
+        <div style={{ padding: '0' }}>
           {tools.map((tool) => (
             <div key={tool.href} className="profile-section">
               {tool.comingSoon ? (
