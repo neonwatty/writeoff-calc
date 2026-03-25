@@ -2,9 +2,11 @@
 
 import { useState, useMemo } from 'react'
 import { useProfile } from '@/lib/use-profile'
+import { computeTaxLiability } from '@/lib/tax-engine'
 import { computeBusinessUsePct, computeHomeOfficeSavings } from '@/lib/home-office-engine'
 import type { HomeOfficeExpense } from '@/lib/home-office-engine'
-import SharedProfile from '@/components/SharedProfile'
+import NavBar from '@/components/NavBar'
+import ProfileSummary from '@/components/ProfileSummary'
 import HomeOfficeInputs, { EXPENSE_CONFIGS, type ExpenseState } from '@/components/HomeOfficeInputs'
 import HomeOfficeResults from '@/components/HomeOfficeResults'
 import MethodComparison from '@/components/MethodComparison'
@@ -41,7 +43,7 @@ function buildExpenseList(expenses: Record<string, ExpenseState>, sqftPct: numbe
 }
 
 export default function HomeOfficeCalculator() {
-  const { profile, setProfile } = useProfile()
+  const { profile } = useProfile()
   const [officeSqft, setOfficeSqft] = useState(0)
   const [homeSqft, setHomeSqft] = useState(0)
   const [expenses, setExpenses] = useState<Record<string, ExpenseState>>(buildInitialExpenses)
@@ -61,42 +63,47 @@ export default function HomeOfficeCalculator() {
     setExpenses((prev) => ({ ...prev, [key]: state }))
   }
 
+  const baseline = computeTaxLiability(profile)
+
   return (
-    <div className="receipt">
-      <div className="receipt-header">
-        <h1>Home Office Costs</h1>
-        <div className="subtitle">
-          {profile.state} &middot; {profile.taxYear}
+    <>
+      <NavBar />
+      <div className="receipt">
+        <div className="receipt-header">
+          <h1>Home Office Costs</h1>
+          <div className="subtitle">
+            {profile.state} &middot; {profile.taxYear}
+          </div>
+        </div>
+
+        <ProfileSummary profile={profile} baseline={baseline} />
+
+        <HomeOfficeInputs
+          officeSqft={officeSqft}
+          homeSqft={homeSqft}
+          sqftPct={sqftPct}
+          expenses={expenses}
+          onOfficeSqftChange={setOfficeSqft}
+          onHomeSqftChange={setHomeSqft}
+          onExpenseChange={handleExpenseChange}
+        />
+
+        <HomeOfficeResults result={result} />
+
+        <MethodComparison result={result} llcNetIncome={profile.llcNetIncome} />
+
+        <div className="receipt-footer">
+          YOUR DATA STAYS IN THIS BROWSER
+          <br />
+          NOTHING IS SENT TO ANY SERVER
+          <br />
+          <br />
+          FOR ESTIMATION PURPOSES ONLY
+          <br />
+          NOT TAX ADVICE &middot; CONSULT YOUR CPA
+          <br />* * * THANK YOU * * *
         </div>
       </div>
-
-      <SharedProfile profile={profile} onChange={setProfile} />
-
-      <HomeOfficeInputs
-        officeSqft={officeSqft}
-        homeSqft={homeSqft}
-        sqftPct={sqftPct}
-        expenses={expenses}
-        onOfficeSqftChange={setOfficeSqft}
-        onHomeSqftChange={setHomeSqft}
-        onExpenseChange={handleExpenseChange}
-      />
-
-      <HomeOfficeResults result={result} />
-
-      <MethodComparison result={result} llcNetIncome={profile.llcNetIncome} />
-
-      <div className="receipt-footer">
-        YOUR DATA STAYS IN THIS BROWSER
-        <br />
-        NOTHING IS SENT TO ANY SERVER
-        <br />
-        <br />
-        FOR ESTIMATION PURPOSES ONLY
-        <br />
-        NOT TAX ADVICE &middot; CONSULT YOUR CPA
-        <br />* * * THANK YOU * * *
-      </div>
-    </div>
+    </>
   )
 }
