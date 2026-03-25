@@ -105,6 +105,11 @@ body {
   color: #1a1a1a;
 }
 
+.receipt-header h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .receipt-header .subtitle {
   font-size: 11px;
   color: #888;
