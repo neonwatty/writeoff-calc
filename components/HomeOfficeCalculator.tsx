@@ -5,6 +5,7 @@ import { useProfile } from '@/lib/use-profile'
 import { computeTaxLiability } from '@/lib/tax-engine'
 import { computeBusinessUsePct, computeHomeOfficeSavings } from '@/lib/home-office-engine'
 import type { HomeOfficeExpense } from '@/lib/home-office-engine'
+import Link from 'next/link'
 import NavBar from '@/components/NavBar'
 import ProfileSummary from '@/components/ProfileSummary'
 import HomeOfficeInputs, { EXPENSE_CONFIGS, type ExpenseState } from '@/components/HomeOfficeInputs'
@@ -70,7 +71,9 @@ export default function HomeOfficeCalculator() {
       <NavBar />
       <div className="receipt">
         <div className="receipt-header">
-          <h1>Home Office Costs</h1>
+          <h1>
+            <Link href="/calculators">Home Office Costs</Link>
+          </h1>
           <div className="subtitle">
             {profile.state} &middot; {profile.taxYear}
           </div>

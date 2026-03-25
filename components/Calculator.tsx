@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { computeTaxLiability, computeSavings, SavingsBreakdown, TaxResult } from '@/lib/tax-engine'
 import { useProfile } from '@/lib/use-profile'
+import Link from 'next/link'
 import NavBar from '@/components/NavBar'
 import ProfileSummary from '@/components/ProfileSummary'
 import RatesSummary from '@/components/RatesSummary'
@@ -23,7 +24,9 @@ export default function Calculator() {
       <NavBar />
       <div className="receipt">
         <div className="receipt-header">
-          <h1>Write-Off Calculator</h1>
+          <h1>
+            <Link href="/calculators">Write-Off Calculator</Link>
+          </h1>
           <div className="subtitle">
             {profile.state} · {profile.taxYear}
           </div>

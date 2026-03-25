@@ -7,6 +7,7 @@ import { useProfile } from '@/lib/use-profile'
 import { ALL_STATES, STATE_WARNINGS } from '@/lib/state-tax-data'
 import { parseCurrencyInput } from '@/lib/format'
 import RatesSummary from '@/components/RatesSummary'
+import Link from 'next/link'
 import NavBar from '@/components/NavBar'
 
 function formatForDisplay(amount: number): string {
@@ -172,7 +173,9 @@ export default function ProfilePage() {
       <NavBar />
       <div className="receipt">
         <div className="receipt-header">
-          <h1>Your Tax Profile</h1>
+          <h1>
+            <Link href="/calculators">Your Tax Profile</Link>
+          </h1>
           <div className="subtitle">Used across all calculators</div>
         </div>
 

@@ -6,6 +6,7 @@ import { computeTaxLiability } from '@/lib/tax-engine'
 import { computeQuarterlyEstimates } from '@/lib/quarterly-engine'
 import type { QuarterlyResult } from '@/lib/quarterly-engine'
 import { parseCurrencyInput } from '@/lib/format'
+import Link from 'next/link'
 import NavBar from '@/components/NavBar'
 import ProfileSummary from '@/components/ProfileSummary'
 import TaxPicture from '@/components/TaxPicture'
@@ -174,7 +175,9 @@ export default function QuarterlyCalculator() {
       <NavBar />
       <div className="receipt">
         <div className="receipt-header">
-          <h1>Quarterly Estimates</h1>
+          <h1>
+            <Link href="/calculators">Quarterly Estimates</Link>
+          </h1>
           <div className="subtitle">
             {profile.state} &middot; {profile.taxYear}
           </div>
