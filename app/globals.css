@@ -157,14 +157,16 @@ body {
   font-weight: 600;
   color: #1a1a1a;
   text-align: right;
-  padding: 2px 0;
+  padding: 8px 0;
   width: 140px;
-  outline: none;
+  min-height: 44px;
 }
 
-.profile-row input:focus,
-.profile-row select:focus {
+.profile-row input:focus-visible,
+.profile-row select:focus-visible {
   border-bottom-color: #1a1a1a;
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
 }
 
 .profile-row select {
@@ -239,12 +241,13 @@ body {
   border-bottom: 2px dashed #ccc;
   text-align: center;
   width: 200px;
-  outline: none;
   padding-bottom: 4px;
 }
 
-.purchase-input:focus {
+.purchase-input:focus-visible {
   border-bottom-color: #1a1a1a;
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
 }
 
 .purchase-input::placeholder {
@@ -449,6 +452,12 @@ body {
   color: #aaa;
 }
 
+.compare-item:focus-visible,
+.breakdown-toggle:focus-visible {
+  outline: 2px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
 /* Footer */
 .receipt-footer {
   margin-top: 20px;
@@ -468,4 +477,37 @@ body {
   letter-spacing: 2px;
   color: #888;
   margin-bottom: 10px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 480px) {
+  body {
+    padding: 16px 12px;
+  }
+
+  .receipt {
+    padding: 24px 16px;
+  }
+
+  .receipt-header {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+
+  .profile-section {
+    margin-bottom: 14px;
+  }
+
+  .receipt-footer {
+    font-size: 9px;
+    line-height: 1.6;
+  }
+
+  .compare-row {
+    flex-wrap: wrap;
+  }
+
+  .compare-item {
+    flex: 0 0 48%;
+  }
 }
