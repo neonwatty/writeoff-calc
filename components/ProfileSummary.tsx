@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import type { TaxProfile, TaxResult } from '@/lib/tax-engine'
 import { getStateMarginalRate, NO_INCOME_TAX_STATES } from '@/lib/state-tax-data'
 
@@ -124,6 +125,12 @@ export default function ProfileSummary({ profile, baseline }: ProfileSummaryProp
         <div style={{ fontSize: '11px', color: '#888' }}>
           {federalPct} &middot; {sePct} &middot; {statePct}
         </div>
+        <Link
+          href="/calculators/profile"
+          style={{ fontSize: '10px', color: '#aaa', textDecoration: 'none', marginTop: '4px', display: 'inline-block' }}
+        >
+          Edit in Profile tab →
+        </Link>
       </div>
     </div>
   )
