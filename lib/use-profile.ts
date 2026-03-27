@@ -6,7 +6,7 @@ import type { TaxProfile } from '@/lib/tax-engine'
 const STORAGE_KEY = 'writeoff-calc-profile'
 
 const DEFAULT_PROFILE: TaxProfile = {
-  w2Income: 75_000,
+  w2Income: 50_000,
   llcNetIncome: 25_000,
   filingStatus: 'single',
   taxYear: 2025,
