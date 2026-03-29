@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Variation A: Full Receipt Landing</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #0a0a0a;
+        color: #e0e0e0;
+        font-family:
+          'Inter',
+          -apple-system,
+          sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+      }
+
+      .page {
+        width: 100%;
+        max-width: 480px;
+      }
+
+      /* Receipt paper */
+      .receipt {
+        background: #faf9f6;
+        color: #1a1a1a;
+        border-radius: 4px;
+        padding: 36px 32px;
+        font-family: 'JetBrains Mono', monospace;
+        position: relative;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .receipt::after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 0;
+        right: 0;
+        height: 12px;
+        background:
+          linear-gradient(135deg, #faf9f6 33.33%, transparent 33.33%) 0 0,
+          linear-gradient(225deg, #faf9f6 33.33%, transparent 33.33%) 0 0;
+        background-size: 12px 12px;
+        background-position: top;
+        background-repeat: repeat-x;
+      }
+
+      /* Header */
+      .receipt-header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 2px dashed #ccc;
+        margin-bottom: 24px;
+      }
+
+      .receipt-header h1 {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #1a1a1a;
+      }
+
+      .receipt-header .subtitle {
+        font-size: 11px;
+        color: #888;
+        margin-top: 4px;
+        letter-spacing: 1px;
+      }
+
+      .receipt-header .tagline {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        color: #555;
+        margin-top: 12px;
+        line-height: 1.6;
+      }
+
+      /* Hero example */
+      .hero-example {
+        text-align: center;
+        padding: 20px 0 24px;
+        border-bottom: 2px dashed #ccc;
+        margin-bottom: 24px;
+      }
+
+      .hero-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #888;
+        margin-bottom: 12px;
+      }
+
+      .hero-item {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 16px;
+      }
+
+      .hero-price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 4px;
+      }
+
+      .hero-original {
+        font-size: 14px;
+        color: #aaa;
+        text-decoration: line-through;
+      }
+
+      .hero-discount-badge {
+        display: inline-block;
+        background: #15803d;
+        color: #fff;
+        font-size: 28px;
+        font-weight: 700;
+        padding: 6px 18px;
+        border-radius: 4px;
+        letter-spacing: 1px;
+        margin: 8px 0;
+      }
+
+      .hero-effective-label {
+        font-size: 12px;
+        color: #888;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .hero-effective-price {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-top: 4px;
+      }
+
+      .hero-note {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        color: #999;
+        margin-top: 12px;
+        line-height: 1.5;
+      }
+
+      /* Calculators section */
+      .section-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #888;
+        margin-bottom: 16px;
+        text-align: center;
+      }
+
+      .tool-section {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed #ccc;
+      }
+
+      .tool-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        padding: 12px 0;
+        transition: background 0.2s;
+        border-radius: 3px;
+      }
+
+      .tool-link:hover {
+        background: rgba(0, 0, 0, 0.03);
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+
+      .tool-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 3px;
+      }
+
+      .tool-desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        color: #888;
+        line-height: 1.5;
+      }
+
+      /* Who this is for */
+      .audience-section {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed #ccc;
+      }
+
+      .audience-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 10px;
+        font-size: 12px;
+        color: #555;
+        line-height: 1.5;
+      }
+
+      .audience-check {
+        color: #15803d;
+        font-weight: 700;
+        font-size: 14px;
+        flex-shrink: 0;
+        margin-top: -1px;
+      }
+
+      /* Blog teaser */
+      .blog-section {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed #ccc;
+      }
+
+      .blog-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        padding: 8px 0;
+        border-bottom: 1px dotted #ddd;
+        transition: background 0.2s;
+      }
+
+      .blog-link:last-child {
+        border-bottom: none;
+      }
+
+      .blog-link:hover {
+        background: rgba(0, 0, 0, 0.03);
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+
+      .blog-link-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 2px;
+      }
+
+      .blog-link-date {
+        font-size: 10px;
+        color: #aaa;
+        letter-spacing: 0.5px;
+      }
+
+      /* Trust */
+      .trust-section {
+        text-align: center;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed #ccc;
+      }
+
+      .trust-item {
+        font-size: 11px;
+        color: #888;
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+      }
+
+      .trust-item strong {
+        color: #555;
+      }
+
+      /* Footer */
+      .receipt-footer {
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 2px dashed #ccc;
+        text-align: center;
+        font-size: 10px;
+        color: #aaa;
+        letter-spacing: 1px;
+        line-height: 1.8;
+      }
+
+      /* CTA button */
+      .cta-button {
+        display: block;
+        background: #15803d;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 14px 24px;
+        border-radius: 4px;
+        margin: 20px 0;
+        transition: background 0.2s;
+        letter-spacing: 0.5px;
+      }
+
+      .cta-button:hover {
+        background: #16a34a;
+      }
+
+      /* Animated entrance */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .receipt {
+        animation: fadeUp 0.5s ease-out;
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 16px 12px;
+        }
+        .receipt {
+          padding: 24px 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="receipt">
+        <!-- Header -->
+        <div class="receipt-header">
+          <h1>Write-Off Calculator</h1>
+          <div class="subtitle">FREE TAX CALCULATORS &middot; 2025&ndash;2026</div>
+          <p class="tagline">
+            See what business expenses actually cost after tax write-offs. Built for W-2 employees with an LLC or side
+            business.
+          </p>
+        </div>
+
+        <!-- Hero example -->
+        <div class="hero-example">
+          <div class="hero-label">Example: New MacBook Pro</div>
+          <div class="hero-item">Business laptop purchase</div>
+          <div class="hero-price-row">
+            <span style="font-size: 12px; color: #888; letter-spacing: 1px; text-transform: uppercase"
+              >Retail Price</span
+            >
+            <span class="hero-original">$2,000</span>
+          </div>
+          <div style="margin: 16px 0 8px">
+            <div class="hero-discount-badge">34% off</div>
+          </div>
+          <div class="hero-effective-label">You actually pay</div>
+          <div class="hero-effective-price">$1,320</div>
+          <p class="hero-note">
+            Your combined federal + state + SE tax rate makes every business expense a discount. Our calculators show
+            you that discount instantly.
+          </p>
+        </div>
+
+        <!-- CTA -->
+        <a href="/calculators/write-off" class="cta-button">Try the Write-Off Calculator &rarr;</a>
+
+        <!-- Calculators -->
+        <div class="tool-section">
+          <div class="section-label">Free Calculators</div>
+          <a href="/calculators/write-off" class="tool-link">
+            <div class="tool-name">Write-Off Calculator &rarr;</div>
+            <div class="tool-desc">Enter any business purchase and see the real cost after your tax deduction.</div>
+          </a>
+          <a href="/calculators/home-office" class="tool-link">
+            <div class="tool-name">Home Office Costs &rarr;</div>
+            <div class="tool-desc">
+              Compare simplified vs. actual method. See the real monthly cost of rent, internet, utilities.
+            </div>
+          </a>
+          <a href="/calculators/quarterly-estimates" class="tool-link">
+            <div class="tool-name">Quarterly Estimates &rarr;</div>
+            <div class="tool-desc">
+              Calculate how much to set aside each quarter. Includes safe harbor compliance check.
+            </div>
+          </a>
+        </div>
+
+        <!-- Who it's for -->
+        <div class="audience-section">
+          <div class="section-label">Built For You If</div>
+          <div class="audience-item">
+            <span class="audience-check">&check;</span>
+            <span>You have a <strong>W-2 job</strong> and a side business or LLC</span>
+          </div>
+          <div class="audience-item">
+            <span class="audience-check">&check;</span>
+            <span>You're not sure what you can <strong>write off</strong> or how much it saves</span>
+          </div>
+          <div class="audience-item">
+            <span class="audience-check">&check;</span>
+            <span>You want to know your <strong>quarterly tax payment</strong> without hiring a CPA</span>
+          </div>
+          <div class="audience-item">
+            <span class="audience-check">&check;</span>
+            <span>You work from home and want to maximize your <strong>home office deduction</strong></span>
+          </div>
+        </div>
+
+        <!-- Blog -->
+        <div class="blog-section">
+          <div class="section-label">Tax Guides</div>
+          <a href="/blog/how-to-estimate-quarterly-taxes-w2-side-business" class="blog-link">
+            <div class="blog-link-title">How to Estimate Quarterly Taxes With a W-2 and Side Business</div>
+            <div class="blog-link-date">March 2026</div>
+          </a>
+          <a href="/blog/self-employment-tax-rate-explained" class="blog-link">
+            <div class="blog-link-title">2026 Self-Employment Tax Rate Explained</div>
+            <div class="blog-link-date">March 2026</div>
+          </a>
+          <a href="/blog/simplified-vs-actual-home-office-deduction" class="blog-link">
+            <div class="blog-link-title">Simplified vs. Actual Home Office Deduction</div>
+            <div class="blog-link-date">March 2026</div>
+          </a>
+        </div>
+
+        <!-- Trust signals -->
+        <div class="trust-section">
+          <div class="trust-item"><strong>100% free</strong> &mdash; no signup, no email required</div>
+          <div class="trust-item"><strong>Private</strong> &mdash; your data stays in your browser</div>
+          <div class="trust-item"><strong>No tracking</strong> &mdash; nothing sent to any server</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="receipt-footer">
+          FOR ESTIMATION PURPOSES ONLY
+          <br />NOT TAX ADVICE &middot; CONSULT YOUR CPA <br /><br />
+          &copy; 2026 WRITEOFFCALCULATOR.COM
+          <br />* * * THANK YOU * * *
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

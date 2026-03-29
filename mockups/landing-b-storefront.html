@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Variation B: Storefront Landing</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #0a0a0a;
+        color: #e0e0e0;
+        font-family:
+          'Inter',
+          -apple-system,
+          sans-serif;
+        min-height: 100vh;
+      }
+
+      /* ─── Hero Section ─── */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 60px 24px 48px;
+        text-align: center;
+        position: relative;
+      }
+
+      .hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(to bottom, #333, transparent);
+      }
+
+      .hero-badge {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #15803d;
+        border: 1px solid #15803d33;
+        padding: 6px 16px;
+        border-radius: 100px;
+        margin-bottom: 24px;
+      }
+
+      .hero h1 {
+        font-family: 'Inter', sans-serif;
+        font-size: clamp(28px, 5vw, 42px);
+        font-weight: 700;
+        color: #faf9f6;
+        line-height: 1.15;
+        max-width: 600px;
+        margin-bottom: 16px;
+      }
+
+      .hero h1 .green {
+        color: #15803d;
+      }
+
+      .hero-sub {
+        font-size: 16px;
+        color: #888;
+        max-width: 480px;
+        line-height: 1.6;
+        margin-bottom: 32px;
+      }
+
+      /* Receipt Mini — the floating hero receipt */
+      .receipt-mini {
+        background: #faf9f6;
+        color: #1a1a1a;
+        font-family: 'JetBrains Mono', monospace;
+        border-radius: 4px;
+        padding: 28px 28px 20px;
+        max-width: 340px;
+        width: 100%;
+        position: relative;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+
+      .receipt-mini::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background:
+          linear-gradient(135deg, #faf9f6 33.33%, transparent 33.33%) 0 0,
+          linear-gradient(225deg, #faf9f6 33.33%, transparent 33.33%) 0 0;
+        background-size: 10px 10px;
+        background-position: top;
+        background-repeat: repeat-x;
+      }
+
+      .mini-header {
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #aaa;
+        margin-bottom: 16px;
+      }
+
+      .mini-item-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 6px;
+      }
+
+      .mini-divider {
+        border: none;
+        border-top: 1px dashed #ccc;
+        margin: 12px 0;
+      }
+
+      .mini-discount {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .mini-discount-label {
+        font-size: 12px;
+        color: #888;
+      }
+
+      .mini-discount-badge {
+        background: #15803d;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 3px;
+      }
+
+      .mini-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .mini-total .original {
+        text-decoration: line-through;
+        color: #aaa;
+        font-weight: 400;
+        font-size: 13px;
+        margin-left: 6px;
+      }
+
+      .mini-footer {
+        font-size: 9px;
+        color: #bbb;
+        margin-top: 14px;
+        letter-spacing: 0.5px;
+      }
+
+      /* CTA row */
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 32px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .cta-primary {
+        background: #15803d;
+        color: #fff;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 14px 28px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background 0.2s;
+        letter-spacing: 0.5px;
+      }
+
+      .cta-primary:hover {
+        background: #16a34a;
+      }
+
+      .cta-secondary {
+        color: #888;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 14px 28px;
+        border: 1px solid #333;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+
+      .cta-secondary:hover {
+        color: #e0e0e0;
+        border-color: #555;
+      }
+
+      /* ─── Calculators Grid ─── */
+      .section {
+        max-width: 840px;
+        margin: 0 auto;
+        padding: 64px 24px;
+      }
+
+      .section-title {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #666;
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .section-title::before,
+      .section-title::after {
+        content: ' ── ';
+        color: #333;
+      }
+
+      .calc-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .calc-card {
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 8px;
+        padding: 28px 20px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.25s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .calc-card:hover {
+        border-color: #15803d;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(21, 128, 61, 0.1);
+      }
+
+      .calc-card-icon {
+        font-size: 28px;
+        margin-bottom: 16px;
+      }
+
+      .calc-card h3 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        font-weight: 600;
+        color: #faf9f6;
+        margin-bottom: 8px;
+      }
+
+      .calc-card p {
+        font-size: 13px;
+        color: #888;
+        line-height: 1.5;
+        flex-grow: 1;
+      }
+
+      .calc-card-arrow {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        color: #15803d;
+        margin-top: 16px;
+        font-weight: 600;
+      }
+
+      /* ─── Audience ─── */
+      .audience-strip {
+        background: #0f0f0f;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+      }
+
+      .audience-inner {
+        max-width: 840px;
+        margin: 0 auto;
+        padding: 48px 24px;
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+      }
+
+      .audience-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #666;
+        white-space: nowrap;
+        padding-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .audience-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+      }
+
+      .audience-item {
+        font-size: 14px;
+        color: #999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .audience-item .check {
+        color: #15803d;
+        font-weight: 700;
+      }
+
+      .audience-item strong {
+        color: #e0e0e0;
+      }
+
+      /* ─── Blog Section ─── */
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .blog-card {
+        background: #111;
+        border: 1px solid #222;
+        border-radius: 8px;
+        padding: 24px 20px;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.25s;
+      }
+
+      .blog-card:hover {
+        border-color: #15803d;
+      }
+
+      .blog-card time {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: #666;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .blog-card h3 {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        font-weight: 600;
+        color: #faf9f6;
+        margin: 10px 0 8px;
+        line-height: 1.4;
+      }
+
+      .blog-card p {
+        font-size: 12px;
+        color: #888;
+        line-height: 1.5;
+      }
+
+      /* ─── Trust + Footer ─── */
+      .trust-strip {
+        text-align: center;
+        padding: 48px 24px;
+        border-top: 1px solid #1a1a1a;
+      }
+
+      .trust-items {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-bottom: 32px;
+      }
+
+      .trust-item {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        color: #666;
+        letter-spacing: 0.5px;
+      }
+
+      .trust-item strong {
+        color: #999;
+      }
+
+      .footer {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        color: #444;
+        letter-spacing: 1px;
+        line-height: 1.8;
+      }
+
+      /* ─── Animations ─── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero {
+        animation: fadeUp 0.6s ease-out;
+      }
+      .receipt-mini {
+        animation: fadeUp 0.6s ease-out 0.15s both;
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 720px) {
+        .calc-grid,
+        .blog-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .audience-inner {
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .hero {
+          padding: 40px 20px 36px;
+        }
+
+        .cta-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .cta-primary,
+        .cta-secondary {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─── Hero ─── -->
+    <section class="hero">
+      <div class="hero-badge">Free &middot; No Signup &middot; 2025&ndash;2026</div>
+      <h1>That $2,000 laptop?<br />It actually costs <span class="green">$1,320</span>.</h1>
+      <p class="hero-sub">
+        Tax write-off calculators for W-2 employees with a side business or LLC. See the real price of every business
+        expense after deductions.
+      </p>
+
+      <!-- Mini receipt -->
+      <div class="receipt-mini">
+        <div class="mini-header">Write-Off Calculator</div>
+        <div class="mini-item-row">
+          <span>MacBook Pro</span>
+          <span>$2,000</span>
+        </div>
+        <div class="mini-item-row">
+          <span>Standing desk</span>
+          <span>$600</span>
+        </div>
+        <div class="mini-item-row">
+          <span>Software license</span>
+          <span>$400</span>
+        </div>
+        <hr class="mini-divider" />
+        <div class="mini-discount">
+          <span class="mini-discount-label">Tax write-off</span>
+          <span class="mini-discount-badge">34% off</span>
+        </div>
+        <hr class="mini-divider" />
+        <div class="mini-total">
+          <span>You actually pay</span>
+          <span>$1,980 <span class="original">$3,000</span></span>
+        </div>
+        <div class="mini-footer">Based on 22% federal + 5% state + 7.65% SE tax</div>
+      </div>
+
+      <div class="cta-row">
+        <a href="/calculators/write-off" class="cta-primary">Try the Calculator &rarr;</a>
+        <a href="/blog" class="cta-secondary">Read Tax Guides</a>
+      </div>
+    </section>
+
+    <!-- ─── Calculators ─── -->
+    <section class="section">
+      <div class="section-title">Free Tax Calculators</div>
+      <div class="calc-grid">
+        <a href="/calculators/write-off" class="calc-card">
+          <div class="calc-card-icon">&dollar;</div>
+          <h3>Write-Off Calculator</h3>
+          <p>Enter any business purchase and see the real cost after your tax deduction.</p>
+          <div class="calc-card-arrow">Open &rarr;</div>
+        </a>
+        <a href="/calculators/home-office" class="calc-card">
+          <div class="calc-card-icon">&#8962;</div>
+          <h3>Home Office Costs</h3>
+          <p>Compare simplified vs. actual method. See the real cost of rent, internet, utilities.</p>
+          <div class="calc-card-arrow">Open &rarr;</div>
+        </a>
+        <a href="/calculators/quarterly-estimates" class="calc-card">
+          <div class="calc-card-icon">&#9783;</div>
+          <h3>Quarterly Estimates</h3>
+          <p>Calculate how much to set aside each quarter. Includes safe harbor check.</p>
+          <div class="calc-card-arrow">Open &rarr;</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── Audience ─── -->
+    <section class="audience-strip">
+      <div class="audience-inner">
+        <div class="audience-label">Built for</div>
+        <div class="audience-list">
+          <div class="audience-item">
+            <span class="check">&check;</span> <strong>W-2 employees</strong> with a side business
+          </div>
+          <div class="audience-item">
+            <span class="check">&check;</span> <strong>LLC owners</strong> figuring out deductions
+          </div>
+          <div class="audience-item">
+            <span class="check">&check;</span> <strong>Freelancers</strong> estimating quarterly taxes
+          </div>
+          <div class="audience-item">
+            <span class="check">&check;</span> <strong>Remote workers</strong> maximizing home office write-offs
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Blog ─── -->
+    <section class="section">
+      <div class="section-title">Tax Guides</div>
+      <div class="blog-grid">
+        <a href="/blog/how-to-estimate-quarterly-taxes-w2-side-business" class="blog-card">
+          <time>March 2026</time>
+          <h3>How to Estimate Quarterly Taxes With a W-2 and Side Business</h3>
+          <p>Learn to calculate your quarterly payments when you have both W-2 and self-employment income.</p>
+        </a>
+        <a href="/blog/self-employment-tax-rate-explained" class="blog-card">
+          <time>March 2026</time>
+          <h3>2026 Self-Employment Tax Rate Explained</h3>
+          <p>The SE tax rate is 15.3%, but you don't pay that on all your income. Here's how it works.</p>
+        </a>
+        <a href="/blog/simplified-vs-actual-home-office-deduction" class="blog-card">
+          <time>March 2026</time>
+          <h3>Simplified vs. Actual Home Office Deduction</h3>
+          <p>Compare both methods to find which home office deduction saves you more on taxes.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── Trust + Footer ─── -->
+    <section class="trust-strip">
+      <div class="trust-items">
+        <div class="trust-item"><strong>100% free</strong> &mdash; no signup required</div>
+        <div class="trust-item"><strong>Private</strong> &mdash; data stays in your browser</div>
+        <div class="trust-item"><strong>No tracking</strong> &mdash; nothing sent to any server</div>
+      </div>
+      <div class="footer">
+        FOR ESTIMATION PURPOSES ONLY &middot; NOT TAX ADVICE &middot; CONSULT YOUR CPA
+        <br />&copy; 2026 WRITEOFFCALCULATOR.COM
+      </div>
+    </section>
+  </body>
+</html>

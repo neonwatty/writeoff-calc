@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import BreadcrumbSchema from '@/components/BreadcrumbSchema'
 import { posts } from '@/lib/blog'
 import { SITE_URL } from '@/lib/site-config'
 
@@ -52,6 +53,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <main className="blog-page">
+      <BreadcrumbSchema
+        items={[
+          { name: 'Blog', href: '/blog' },
+          { name: post.title, href: `/blog/${post.slug}` },
+        ]}
+      />
       <article className="blog-article">
         <Link href="/blog" className="blog-back">
           &larr; All posts
