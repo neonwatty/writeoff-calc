@@ -9,6 +9,24 @@ interface Post {
 
 export const posts: Post[] = [
   {
+    slug: 'why-w2-job-makes-llc-writeoffs-worth-more',
+    title: 'Why Your W-2 Job Makes Your LLC Write-Offs Worth More',
+    description:
+      'Your W-2 salary and LLC profit are taxed together on one return. Your salary fills the lower brackets, so every LLC write-off saves you more. Here\u2019s how it works.',
+    date: '2026-03-30',
+    keywords: [
+      'LLC write-off',
+      'W-2 and LLC taxes',
+      'tax write-off calculator',
+      'why do write-offs save more with higher income',
+      'LLC tax deductions',
+    ],
+    cta: {
+      text: 'See your real write-off discount',
+      href: '/calculators/write-off',
+    },
+  },
+  {
     slug: 'how-to-estimate-quarterly-taxes-w2-side-business',
     title: 'How to Estimate Quarterly Taxes With a W-2 and Side Business',
     description:
