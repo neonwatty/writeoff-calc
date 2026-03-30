@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import BreadcrumbSchema from '@/components/BreadcrumbSchema'
 import HomeOfficeLoader from '@/components/HomeOfficeLoader'
 import { SITE_URL } from '@/lib/site-config'
 
@@ -16,7 +18,18 @@ export const metadata: Metadata = {
 export default function HomeOfficePage() {
   return (
     <main>
+      <BreadcrumbSchema
+        items={[
+          { name: 'Calculators', href: '/calculators' },
+          { name: 'Home Office Calculator', href: '/calculators/home-office' },
+        ]}
+      />
       <HomeOfficeLoader />
+      <div className="calc-related-guide">
+        <Link href="/blog/simplified-vs-actual-home-office-deduction">
+          Guide: Simplified vs. Actual Home Office Deduction &rarr;
+        </Link>
+      </div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -31,6 +44,33 @@ export default function HomeOfficePage() {
             operatingSystem: 'All',
             offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
             browserRequirements: 'Requires JavaScript',
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'What is the simplified home office deduction?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'The simplified method lets you deduct $5 per square foot of your home office, up to 300 square feet, for a maximum deduction of $1,500 per year. No need to track individual expenses.',
+                },
+              },
+              {
+                '@type': 'Question',
+                name: 'Can W-2 employees claim a home office deduction?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'W-2 employees cannot claim the home office deduction for their employer work. However, if you have a side business or LLC that you run from home, you can deduct home office expenses for that business on Schedule C.',
+                },
+              },
+            ],
           }),
         }}
       />

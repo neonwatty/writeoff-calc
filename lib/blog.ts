@@ -1,4 +1,4 @@
-export interface Post {
+interface Post {
   slug: string
   title: string
   description: string

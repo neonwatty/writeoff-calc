@@ -664,6 +664,440 @@ body {
   background: #16a34a;
 }
 
+/* Calculator → Blog cross-links */
+.calc-related-guide {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.calc-related-guide a {
+  color: #15803d;
+  text-decoration: none;
+}
+
+.calc-related-guide a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Landing page (Variation B — storefront) ─── */
+.landing {
+  width: 100%;
+}
+
+.landing-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 24px 48px;
+  text-align: center;
+  position: relative;
+}
+
+.landing-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, #333, transparent);
+}
+
+.landing-badge {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #15803d;
+  border: 1px solid rgba(21, 128, 61, 0.2);
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+
+.landing-hero h1 {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  color: #faf9f6;
+  line-height: 1.15;
+  max-width: 600px;
+  margin-bottom: 16px;
+}
+
+.landing-green {
+  color: #15803d;
+}
+
+.landing-hero-sub {
+  font-size: 16px;
+  color: #888;
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* Mini receipt hero */
+.landing-receipt {
+  background: #faf9f6;
+  color: #1a1a1a;
+  font-family: var(--font-mono), monospace;
+  border-radius: 4px;
+  padding: 28px 28px 20px;
+  max-width: 340px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.landing-receipt::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background:
+    linear-gradient(135deg, #faf9f6 33.33%, transparent 33.33%) 0 0,
+    linear-gradient(225deg, #faf9f6 33.33%, transparent 33.33%) 0 0;
+  background-size: 10px 10px;
+  background-position: top;
+  background-repeat: repeat-x;
+}
+
+.landing-receipt-header {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 16px;
+}
+
+.landing-receipt-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.landing-receipt-divider {
+  border: none;
+  border-top: 1px dashed #ccc;
+  margin: 12px 0;
+}
+
+.landing-receipt-discount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.landing-receipt-badge {
+  background: #15803d;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.landing-receipt-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.landing-receipt-original {
+  text-decoration: line-through;
+  color: #aaa;
+  font-weight: 400;
+  font-size: 13px;
+  margin-left: 6px;
+}
+
+.landing-receipt-note {
+  font-size: 9px;
+  color: #bbb;
+  margin-top: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* CTA buttons */
+.landing-cta-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.landing-cta-primary {
+  background: #15803d;
+  color: #fff;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.landing-cta-primary:hover {
+  background: #16a34a;
+}
+
+.landing-cta-secondary {
+  color: #888;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.landing-cta-secondary:hover {
+  color: #e0e0e0;
+  border-color: #555;
+}
+
+/* Sections */
+.landing-section {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 64px 24px;
+}
+
+.landing-section-title {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-weight: normal;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #666;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.landing-section-title::before,
+.landing-section-title::after {
+  content: ' \2500\2500 ';
+  color: #333;
+}
+
+/* Calculator grid */
+.landing-calc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.landing-calc-card {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 28px 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-calc-card:hover {
+  border-color: #15803d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(21, 128, 61, 0.1);
+}
+
+.landing-calc-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.landing-calc-card h3 {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #faf9f6;
+  margin-bottom: 8px;
+}
+
+.landing-calc-card p {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.landing-calc-arrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: #15803d;
+  margin-top: 16px;
+  font-weight: 600;
+}
+
+/* Audience strip */
+.landing-audience {
+  background: #0f0f0f;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.landing-audience-inner {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.landing-audience-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #666;
+  white-space: nowrap;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.landing-audience-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+
+.landing-audience-item {
+  font-size: 14px;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.landing-check {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.landing-audience-item strong {
+  color: #e0e0e0;
+}
+
+/* Blog grid */
+.landing-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.landing-blog-card {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 24px 20px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.25s;
+}
+
+.landing-blog-card:hover {
+  border-color: #15803d;
+}
+
+.landing-blog-card time {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  color: #666;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.landing-blog-card h3 {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #faf9f6;
+  margin: 10px 0 8px;
+  line-height: 1.4;
+}
+
+.landing-blog-card p {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* Trust + footer */
+.landing-trust {
+  text-align: center;
+  padding: 48px 24px;
+  border-top: 1px solid #1a1a1a;
+}
+
+.landing-trust-items {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.landing-trust-item {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 0.5px;
+}
+
+.landing-trust-item strong {
+  color: #999;
+}
+
+.landing-footer {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  color: #444;
+  letter-spacing: 1px;
+  line-height: 1.8;
+}
+
+/* Landing animations */
+@keyframes landingFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-hero {
+  animation: landingFadeUp 0.6s ease-out;
+}
+.landing-receipt {
+  animation: landingFadeUp 0.6s ease-out 0.15s both;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 480px) {
   .page {
@@ -750,5 +1184,30 @@ body {
 
   .compare-item {
     flex: 0 0 48%;
+  }
+
+  /* Landing page mobile */
+  .landing-hero {
+    padding: 40px 20px 36px;
+  }
+
+  .landing-calc-grid,
+  .landing-blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-audience-inner {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .landing-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .landing-cta-primary,
+  .landing-cta-secondary {
+    text-align: center;
   }
 }
