@@ -197,7 +197,15 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #888;
+  margin-bottom: 4px;
+}
+
+.rates-note {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 11px;
+  color: #999;
   margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 .rates-row {
@@ -896,6 +904,20 @@ body {
 .landing-section-title::after {
   content: ' \2500\2500 ';
   color: #333;
+}
+
+/* Landing explainer */
+.landing-explainer {
+  max-width: 540px;
+  text-align: center;
+  padding-top: 48px;
+  padding-bottom: 32px;
+}
+
+.landing-explainer-text {
+  font-size: 15px;
+  color: #999;
+  line-height: 1.7;
 }
 
 /* Calculator grid */
