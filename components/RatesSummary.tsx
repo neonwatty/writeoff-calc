@@ -29,6 +29,7 @@ export default function RatesSummary({ baseline, state }: RatesSummaryProps) {
   return (
     <div className="rates-summary">
       <h2 className="section-label">Your Rates</h2>
+      <div className="rates-note">Your W-2 income sets these rates &mdash; LLC write-offs save at the top bracket</div>
 
       <div className="rates-row">
         <span>Federal marginal bracket</span>

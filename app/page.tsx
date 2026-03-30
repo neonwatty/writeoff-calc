@@ -67,8 +67,8 @@ export default function HomePage() {
           It actually costs <span className="landing-green">$1,320</span>.
         </h1>
         <p className="landing-hero-sub">
-          Tax write-off calculators for W-2 employees with a side business or LLC. See the real price of every business
-          expense after deductions.
+          Your W-2 salary pushes your LLC income into a higher tax bracket &mdash; which means every business expense
+          gets a bigger write-off than you&rsquo;d think. These calculators show you that discount.
         </p>
 
         {/* Mini receipt */}
@@ -98,7 +98,9 @@ export default function HomePage() {
               $1,980 <span className="landing-receipt-original">$3,000</span>
             </span>
           </div>
-          <div className="landing-receipt-note">Based on 22% federal + 5% state + 7.65% SE tax</div>
+          <div className="landing-receipt-note">
+            Your $50K salary puts LLC income in the 22% bracket + 5% state + 7.65% SE tax = 34% discount
+          </div>
         </div>
 
         <div className="landing-cta-row">
@@ -109,6 +111,17 @@ export default function HomePage() {
             Read Tax Guides
           </Link>
         </div>
+      </section>
+
+      {/* How it works */}
+      <section className="landing-section landing-explainer">
+        <h2 className="landing-section-title">Why Your Day Job Increases Your Write-Offs</h2>
+        <p className="landing-explainer-text">
+          The IRS taxes your W-2 salary and LLC profit together on one return. Your salary fills up the lower tax
+          brackets first, so your LLC income lands in a higher bracket. When you write off an LLC expense, you&rsquo;re
+          removing dollars from that top bracket &mdash; where the rate is highest. Higher bracket = bigger savings on
+          every deduction.
+        </p>
       </section>
 
       {/* Calculators */}

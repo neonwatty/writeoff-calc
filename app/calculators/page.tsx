@@ -47,8 +47,9 @@ export default function CalculatorsHub() {
         {/* Landing message */}
         <div className="profile-section">
           <div style={{ fontSize: '13px', color: '#555', lineHeight: '1.7' }}>
-            When you write off a business expense, you don&rsquo;t see the savings until you file your taxes. These
-            calculators show you that discount now &mdash; like seeing the sale price before you buy.
+            Your W-2 salary and LLC profit are taxed together. Your salary fills the lower brackets, so LLC expenses
+            come off the top &mdash; where the rate is highest. These calculators show you that discount now, like
+            seeing the sale price before you buy.
           </div>
         </div>
 
