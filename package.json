@@ -19,9 +19,9 @@
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@next/mdx": "^16.2.1",
+    "@next/mdx": "^16.2.2",
     "@types/mdx": "^2.0.13",
-    "next": "16.2.1",
+    "next": "16.2.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "remark-gfm": "^4.0.1"
@@ -29,7 +29,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
-    "@next/eslint-plugin-next": "^16.2.1",
+    "@next/eslint-plugin-next": "^16.2.2",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/github": "^12.0.6",
     "@semantic-release/release-notes-generator": "^14.1.0",
@@ -38,18 +38,18 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.1",
+    "eslint-config-next": "16.2.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-security": "^4.0.0",
     "husky": "^9.1.7",
-    "knip": "^6.0.4",
+    "knip": "^6.3.0",
     "prettier": "^3.8.1",
     "semantic-release": "^25.0.3",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "typescript-eslint": "^8.57.2",
-    "vitest": "^4.1.1"
+    "typescript-eslint": "^8.58.0",
+    "vitest": "^4.1.2"
   }
 }
